@@ -41,7 +41,7 @@ namespace Battleship
                     unBouton.Location = new Point(i * 35, y * 35);
                     unBouton.Name = "BTN_" + (i + 1).ToString() + LetterArray[y] + unString;
 
-                    if(unPanel == PN_Ennemi)
+                    if(unPanel == PN_Joueur)
                     {
                         unBouton.Enabled = false;
                     }
