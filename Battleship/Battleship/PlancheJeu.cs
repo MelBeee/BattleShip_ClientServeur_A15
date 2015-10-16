@@ -40,6 +40,11 @@ namespace Battleship
                     unBouton.Parent = unPanel;
                     unBouton.Location = new Point(i * 35, y * 35);
                     unBouton.Name = "BTN_" + (i + 1).ToString() + LetterArray[y] + unString;
+
+                    if(unPanel == PN_Ennemi)
+                    {
+                        unBouton.Enabled = false;
+                    }
                 }
             }
         }
