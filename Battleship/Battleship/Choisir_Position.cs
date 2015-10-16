@@ -21,5 +21,11 @@ namespace Battleship
         {
 
         }
+        private void BTN_Start_Click(object sender, EventArgs e)
+        {
+            PlancheJeu planche = new PlancheJeu();
+            planche.Show();
+            this.Close();
+        }
     }
 }
