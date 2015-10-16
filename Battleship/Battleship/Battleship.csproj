@@ -53,10 +53,19 @@
     <Compile Include="Menu.Designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
+    <Compile Include="PlancheJeu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlancheJeu.Designer.cs">
+      <DependentUpon>PlancheJeu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlancheJeu.resx">
+      <DependentUpon>PlancheJeu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -92,6 +101,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Demarrer-Over.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Dark water wallpaper 2560x1600.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

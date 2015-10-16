@@ -63,6 +63,16 @@ namespace Battleship.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Dark_water_wallpaper_2560x1600 {
+            get {
+                object obj = ResourceManager.GetObject("Dark water wallpaper 2560x1600", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Demarrer_Click {
             get {
                 object obj = ResourceManager.GetObject("Demarrer-Click", resourceCulture);

@@ -30,5 +30,12 @@ namespace Battleship
         {
             this.Close();
         }
+
+        private void flashButton1_Click(object sender, EventArgs e)
+        {
+            PlancheJeu form = new PlancheJeu();
+
+            form.ShowDialog();
+        }
     }
 }

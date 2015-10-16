@@ -10,3 +10,4 @@ C:\Users\201029426\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship\Batt
 C:\Users\201029426\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship\Battleship\obj\Debug\Battleship.csproj.GenerateResource.Cache
 C:\Users\201029426\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship\Battleship\obj\Debug\Battleship.exe
 C:\Users\201029426\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship\Battleship\obj\Debug\Battleship.pdb
+C:\Users\201029426\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship\Battleship\obj\Debug\Battleship.PlancheJeu.resources
