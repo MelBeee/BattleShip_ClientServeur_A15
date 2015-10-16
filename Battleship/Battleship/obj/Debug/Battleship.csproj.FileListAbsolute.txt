@@ -1,1 +1,12 @@
 C:\Users\201029426\Desktop\Battleship\Battleship\bin\Debug\Battleship.exe.config
+C:\Users\201029426\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship\Battleship\bin\Debug\Battleship.exe.config
+C:\Users\201029426\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship\Battleship\bin\Debug\Battleship.exe
+C:\Users\201029426\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship\Battleship\bin\Debug\Battleship.pdb
+C:\Users\201029426\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship\Battleship\bin\Debug\FlashButton.dll
+C:\Users\201029426\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship\Battleship\bin\Debug\FlashButton.pdb
+C:\Users\201029426\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship\Battleship\obj\Debug\Battleship.csprojResolveAssemblyReference.cache
+C:\Users\201029426\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship\Battleship\obj\Debug\Battleship.Menu.resources
+C:\Users\201029426\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship\Battleship\obj\Debug\Battleship.Properties.Resources.resources
+C:\Users\201029426\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship\Battleship\obj\Debug\Battleship.csproj.GenerateResource.Cache
+C:\Users\201029426\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship\Battleship\obj\Debug\Battleship.exe
+C:\Users\201029426\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship\Battleship\obj\Debug\Battleship.pdb
