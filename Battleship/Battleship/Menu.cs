@@ -33,7 +33,7 @@ namespace Battleship
 
         private void flashButton1_Click(object sender, EventArgs e)
         {
-            PlancheJeu form = new PlancheJeu();
+            Choisir_Position form = new Choisir_Position();
 
             form.ShowDialog();
         }

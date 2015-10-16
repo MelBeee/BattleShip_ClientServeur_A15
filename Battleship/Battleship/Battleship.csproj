@@ -126,6 +126,9 @@
   <ItemGroup>
     <None Include="Images\depositphotos_38146687-Repeating-Hexadecimal-Background.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WaterTile1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
