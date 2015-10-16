@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Choisir_Position.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Choisir_Position.Designer.cs">
+      <DependentUpon>Choisir_Position.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,6 +67,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Choisir_Position.resx">
+      <DependentUpon>Choisir_Position.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>
@@ -104,6 +113,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Dark water wallpaper 2560x1600.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\2425972-fiber_carbon_tiled_pattern_background_vol.11.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Brown_Metallic_Tile.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\9854938-green-grid-crosses-background-repeatable.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\depositphotos_38146687-Repeating-Hexadecimal-Background.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

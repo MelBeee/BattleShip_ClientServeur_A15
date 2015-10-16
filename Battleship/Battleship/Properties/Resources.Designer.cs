@@ -63,6 +63,36 @@ namespace Battleship.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _2425972_fiber_carbon_tiled_pattern_background_vol_11 {
+            get {
+                object obj = ResourceManager.GetObject("2425972-fiber_carbon_tiled_pattern_background_vol.11", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _9854938_green_grid_crosses_background_repeatable {
+            get {
+                object obj = ResourceManager.GetObject("9854938-green-grid-crosses-background-repeatable", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Brown_Metallic_Tile {
+            get {
+                object obj = ResourceManager.GetObject("Brown_Metallic_Tile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Dark_water_wallpaper_2560x1600 {
             get {
                 object obj = ResourceManager.GetObject("Dark water wallpaper 2560x1600", resourceCulture);
@@ -106,6 +136,16 @@ namespace Battleship.Properties {
         internal static System.Drawing.Bitmap Demarrer_Over {
             get {
                 object obj = ResourceManager.GetObject("Demarrer-Over", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap depositphotos_38146687_Repeating_Hexadecimal_Background {
+            get {
+                object obj = ResourceManager.GetObject("depositphotos_38146687-Repeating-Hexadecimal-Background", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
