@@ -36,10 +36,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Matura MT Script Capitals", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(49, 28);
+            this.label1.Font = new System.Drawing.Font("Bernard MT Condensed", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Azure;
+            this.label1.Location = new System.Drawing.Point(76, 30);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(341, 85);
+            this.label1.Size = new System.Drawing.Size(279, 76);
             this.label1.TabIndex = 0;
             this.label1.Text = "Battleship";
             // 
