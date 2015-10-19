@@ -18,7 +18,8 @@ namespace BattleShip_Serveur
         TcpListener socketServeur;
         Boolean ServeurOuvert = false;
         IPAddress adresseIp;
-        TcpClient[] TabClient;
+        TcpClient Joueur1;
+        TcpClient Joueur2;
 
 
         public Form1()
@@ -53,18 +54,28 @@ namespace BattleShip_Serveur
                 LB_StatusServer.ForeColor = Color.Green;
                 Btn_DémarrerServeur.Text = "Déconnecter";
                 Btn_DémarrerServeur.Enabled = false;
-                            
+                this.Refresh();
 
-                for (int nbClient = 0; nbClient < 1; nbClient++)
-                {
-                    this.Refresh();
-                    TabClient[nbClient] = socketServeur.AcceptTcpClient();
-                    if (nbClient == 0)
-                        Lb_JoueurConnecter.Text = "Joueur trouvé en attente d'un autre joueur...";
-                    else if(nbClient == 1)
-                        Lb_JoueurConnecter.Text = "Deuxième Joueur Trouvé démarage de la partie...";
+                for (int nbClient = 0; nbClient < 2; nbClient++)
+                 {
+                    
+                     if (nbClient == 0)
+                     {
+                         Joueur1 = socketServeur.AcceptTcpClient();
+                         Lb_JoueurConnecter.Text = "Joueur trouvé en attente d'un autre joueur...";
+                     }
+                     else if (nbClient == 1)
+                     {
+                         Lb_JoueurConnecter.Text = "Deuxième Joueur Trouvé démarage de la partie...";
+                     }
+                         
+                     this.Refresh();
+                 }            
+                 Btn_DémarrerServeur.Enabled = true;
+                
+                 
 
-                }                
+              //  }                
 
             }
             catch(SocketException ex)

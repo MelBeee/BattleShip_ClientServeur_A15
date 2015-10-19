@@ -34,17 +34,20 @@ namespace Battleship
 
         private void flashButton1_Click(object sender, EventArgs e)
         {
+            SeConnecter();
+
             Choisir_Position form = new Choisir_Position();
 
             form.ShowDialog();
 
-            SeConnecter();
+            
 
         }
         private void SeConnecter()
         {
-            TcpClient client = new TcpClient("127.0.0.1", 1234);
-
+            TcpClient client = new TcpClient();
+            client.Connect("localhost",1234);
+            
         }
     }
 }
