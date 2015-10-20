@@ -34,7 +34,7 @@ namespace Battleship
 
         private void flashButton1_Click(object sender, EventArgs e)
         {
-            SeConnecter();
+            //SeConnecter();
 
             Choisir_Position form = new Choisir_Position();
 
@@ -46,7 +46,7 @@ namespace Battleship
         private void SeConnecter()
         {
             TcpClient client = new TcpClient();
-            client.Connect("localhost",1234);
+            client.Connect("172.17.104.101",1234);
             
         }
     }

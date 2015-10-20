@@ -48,5 +48,10 @@ namespace Battleship
                 }
             }
         }
+
+        private void PN_Ennemi_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
