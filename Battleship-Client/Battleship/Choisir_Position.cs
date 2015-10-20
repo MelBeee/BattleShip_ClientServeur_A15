@@ -28,5 +28,10 @@ namespace Battleship
             planche.ShowDialog();
             this.Close();
         }
+
+        private void BTN_A1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
