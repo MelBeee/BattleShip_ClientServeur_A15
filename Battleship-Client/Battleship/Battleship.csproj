@@ -47,12 +47,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bateau.cs" />
     <Compile Include="Choisir_Position.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Choisir_Position.Designer.cs">
       <DependentUpon>Choisir_Position.cs</DependentUpon>
     </Compile>
+    <Compile Include="Flotte.cs" />
     <Compile Include="Menu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -128,6 +130,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\WaterTile1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bateau.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

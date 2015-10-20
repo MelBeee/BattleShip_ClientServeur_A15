@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Battleship
 {
-    enum TypeBateau
+    public enum TypeBateau
     {
         Destroyer,
         BattleShip,
@@ -15,14 +15,14 @@ namespace Battleship
         PatrolBoat
     }
 
-    struct Position
+    public struct Position
     {
-        public char number;
+        public int number;
         public char letter;
         public bool touche;
     }
 
-    class Bateau
+    public class Bateau
     {
         public TypeBateau leType;
         public int NbreCases;

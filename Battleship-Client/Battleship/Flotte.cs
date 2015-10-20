@@ -6,14 +6,30 @@ using System.Threading.Tasks;
 
 namespace Battleship
 {
-    class Flotte
-    { 
-        Bateau BattleShip = new Bateau(TypeBateau.BattleShip, 5, false, 0);
-        Bateau Destroyeur = new Bateau(TypeBateau.Destroyer, 4, false, 0);
-        Bateau Submarine = new Bateau(TypeBateau.Submarine, 4, false, 0);
-        Bateau Aircraft = new Bateau(TypeBateau.AircraftCarrier, 3, false, 0);
-        Bateau Patrol = new Bateau(TypeBateau.PatrolBoat, 2, false, 0);
+    public enum Type
+    {
+        allier,
+        ennemi
+    }
 
+    public class Flotte
+    {
+        public Bateau BattleShip;
+        public Bateau Destroyeur;
+        public Bateau Submarine;
+        public Bateau Aircraft;
+        public Bateau Patrol;
+        Type unType;
+
+        public Flotte(Position[] a_BattleShip, Position[] a_Destroyeur, Position[] a_Submarine, Position[] a_Aircraft, Position[] a_Patrol, Type leType)
+        {
+            BattleShip = new Bateau(TypeBateau.BattleShip, 5, false, 0, a_BattleShip);
+            Destroyeur = new Bateau(TypeBateau.Destroyer, 4, false, 0, a_Destroyeur);
+            Submarine = new Bateau(TypeBateau.Submarine, 3, false, 0, a_Submarine);
+            Aircraft = new Bateau(TypeBateau.AircraftCarrier, 3, false, 0, a_Aircraft);
+            Patrol = new Bateau(TypeBateau.PatrolBoat, 2, false, 0, a_Patrol);
+            unType = leType;
+        }
 
         public bool FlotteDetruite()
         {
