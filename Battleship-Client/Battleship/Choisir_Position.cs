@@ -24,7 +24,8 @@ namespace Battleship
         private void BTN_Start_Click(object sender, EventArgs e)
         {
             PlancheJeu planche = new PlancheJeu();
-            planche.Show();
+            this.Visible = false;
+            planche.ShowDialog();
             this.Close();
         }
     }

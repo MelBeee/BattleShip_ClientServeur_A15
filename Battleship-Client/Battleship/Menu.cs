@@ -45,8 +45,20 @@ namespace Battleship
         }
         private void SeConnecter()
         {
-            TcpClient client = new TcpClient();
-            client.Connect("172.17.104.101",1234);
+            try
+            {
+                TcpClient client = new TcpClient();
+                client.Connect("172.17.104.101", 1234);
+            }
+            catch(SocketException ext)
+            {
+                this.Close();
+            }
+            catch(Exception exc)
+            {
+                MessageBox.Show("exception");
+            }
+
             
         }
     }
