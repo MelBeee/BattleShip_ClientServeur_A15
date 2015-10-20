@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Battleship
+{
+    class Flotte
+    { 
+        Bateau BattleShip = new Bateau(TypeBateau.BattleShip, 5, false, 0);
+        Bateau Destroyeur = new Bateau(TypeBateau.Destroyer, 4, false, 0);
+        Bateau Submarine = new Bateau(TypeBateau.Submarine, 4, false, 0);
+        Bateau Aircraft = new Bateau(TypeBateau.AircraftCarrier, 3, false, 0);
+        Bateau Patrol = new Bateau(TypeBateau.PatrolBoat, 2, false, 0);
+
+
+        public bool FlotteDetruite()
+        {
+            if (BattleShip.NbreCasesTouche != BattleShip.NbreCases)
+                return false;
+            if (Destroyeur.NbreCasesTouche != Destroyeur.NbreCases)
+                return false;
+            if (Submarine.NbreCasesTouche != Submarine.NbreCases)
+                return false;
+            if (Aircraft.NbreCasesTouche != Aircraft.NbreCases)
+                return false;
+            if (Patrol.NbreCasesTouche != Patrol.NbreCases)
+                return false; 
+
+            return true;
+        }
+    }
+}

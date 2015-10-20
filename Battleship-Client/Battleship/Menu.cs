@@ -52,11 +52,13 @@ namespace Battleship
             }
             catch(SocketException ext)
             {
+                MessageBox.Show(ext.ToString());
                 this.Close();
             }
             catch(Exception exc)
             {
-                MessageBox.Show("exception");
+                MessageBox.Show(exc.ToString());
+               
             }
 
             

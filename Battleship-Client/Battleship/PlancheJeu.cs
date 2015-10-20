@@ -49,9 +49,27 @@ namespace Battleship
             }
         }
 
-        private void PN_Ennemi_Paint(object sender, PaintEventArgs e)
+        private void BTN_Action_Over(object sender, EventArgs e)
         {
 
+        }
+
+        private void BTN_Quit_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Etes vous sur de vouloir quitter la partie en cours ? ", "Attention !", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
+            {
+                this.Close();
+            }
+        }
+
+        private void BTN_NewGame_Click(object sender, EventArgs e)
+        {
+            if( MessageBox.Show("Etes vous sur de vouloir quitter la partie en cours pour en recommencer une nouvelle ? ", "Attention !", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
+            {
+                this.Visible = false; 
+                Choisir_Position unForm = new Choisir_Position();
+                unForm.ShowDialog();
+            }
         }
     }
 }
