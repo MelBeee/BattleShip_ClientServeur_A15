@@ -2,8 +2,8 @@ C:\Users\201356187\Desktop\BattleShip_ClientServeur_A15\BattleShip-Serveur\Battl
 C:\Users\201356187\Desktop\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\bin\Debug\BattleShip-Serveur.exe
 C:\Users\201356187\Desktop\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\bin\Debug\BattleShip-Serveur.pdb
 C:\Users\201356187\Desktop\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\obj\Debug\BattleShip-Serveur.csprojResolveAssemblyReference.cache
-C:\Users\201356187\Desktop\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\obj\Debug\BattleShip_Serveur.Form1.resources
 C:\Users\201356187\Desktop\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\obj\Debug\BattleShip_Serveur.Properties.Resources.resources
 C:\Users\201356187\Desktop\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\obj\Debug\BattleShip-Serveur.csproj.GenerateResource.Cache
 C:\Users\201356187\Desktop\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\obj\Debug\BattleShip-Serveur.exe
 C:\Users\201356187\Desktop\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\obj\Debug\BattleShip-Serveur.pdb
+C:\Users\201356187\Desktop\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\obj\Debug\BattleShip_Serveur.FormServeur.resources

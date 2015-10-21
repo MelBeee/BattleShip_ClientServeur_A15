@@ -11,8 +11,10 @@ using System.Windows.Forms;
 
 namespace Battleship
 {
+   
     public partial class Menu : Form
     {
+        TcpClient client;
         public Menu()
         {
             InitializeComponent();
@@ -20,11 +22,7 @@ namespace Battleship
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            var pos = this.PointToScreen(label1.Location);
-            pos = this.PointToClient(pos);
-            label1.Parent = this;
-            label1.Location = pos;
-            label1.BackColor = Color.Transparent;
+            
         }
 
         private void flashButton2_Click(object sender, EventArgs e)
@@ -33,19 +31,24 @@ namespace Battleship
         }
 
         private void flashButton1_Click(object sender, EventArgs e)
-        {
-            SeConnecter();
+        {   
+            try
+            {
+                SeConnecter();
 
-            Choisir_Position form = new Choisir_Position();
+                Choisir_Position form = new Choisir_Position();
 
-            form.ShowDialog();           
+                form.ShowDialog();           
+            }catch(Exception ex)
+            {
+                MessageBox.Show("Le serveur n'est pas encore ouvert");
 
+            }   
         }
         private void SeConnecter()
         {
-                  
-                TcpClient client = new TcpClient();
-                client.Connect("localhost",1234);      
+                client = new TcpClient();
+                client.Connect("127.0.0.1", 1234);                      
         }
     }
 }

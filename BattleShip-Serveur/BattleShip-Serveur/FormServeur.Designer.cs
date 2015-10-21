@@ -1,6 +1,6 @@
 ﻿namespace BattleShip_Serveur
 {
-    partial class Form1
+    partial class FormServeur
     {
         /// <summary>
         /// Variable nécessaire au concepteur.
@@ -71,7 +71,7 @@
             this.Controls.Add(this.Btn_DémarrerServeur);
             this.Controls.Add(this.LB_StatusServer);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "FormServeur";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -79,9 +79,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Label LB_StatusServer;
-        private System.Windows.Forms.Button Btn_DémarrerServeur;
-        private System.Windows.Forms.Label Lb_JoueurConnecter;
+        public System.Windows.Forms.Label LB_StatusServer;
+        public System.Windows.Forms.Button Btn_DémarrerServeur;
+        public System.Windows.Forms.Label Lb_JoueurConnecter;
     }
 }
 
