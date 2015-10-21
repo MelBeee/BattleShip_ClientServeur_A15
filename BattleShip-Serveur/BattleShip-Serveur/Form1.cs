@@ -30,13 +30,22 @@ namespace BattleShip_Serveur
         private void Btn_DémarrerServeur_Click(object sender, EventArgs e)
         {
             if(!ServeurOuvert)
-            {         
+            {  
+                Btn_DémarrerServeur.Text = "Fermer";
+                LB_StatusServer.Text = "SERVEUR OUVERT";
+                LB_StatusServer.ForeColor = Color.Green;
+               
                 OuvrirServeur();
-                ServeurOuvert = true;
+                ServeurOuvert = true;              
             }
             else
-            {
+            { 
+                Btn_DémarrerServeur.Text = "Ouvrir";
+                LB_StatusServer.Text = "SERVEUR FERMER";
+                LB_StatusServer.ForeColor = Color.Red;
+                Lb_JoueurConnecter.Text = "";
                 FermerServeur();
+                ServeurOuvert = false;              
             }            
         }
 
@@ -46,36 +55,32 @@ namespace BattleShip_Serveur
                        
             try
             {
-                adresseIp = IPAddress.Parse("127.0.0.1");
+                adresseIp = IPAddress.Parse("0");
                 socketServeur = new TcpListener(adresseIp, 1234);
                 socketServeur.Start();
-                Lb_JoueurConnecter.Text = "En attente de joueur...";
-                LB_StatusServer.Text = "SERVEUR OUVERT";
-                LB_StatusServer.ForeColor = Color.Green;
-                Btn_DémarrerServeur.Text = "Déconnecter";
+                Lb_JoueurConnecter.Text = "En attente de joueur...";             
+              
                 Btn_DémarrerServeur.Enabled = false;
-                this.Refresh();
+                
 
                 for (int nbClient = 0; nbClient < 2; nbClient++)
                  {
-                    
+                     this.Refresh();
                      if (nbClient == 0)
                      {
                          Joueur1 = socketServeur.AcceptTcpClient();
                          Lb_JoueurConnecter.Text = "Joueur trouvé en attente d'un autre joueur...";
+                         this.Refresh();
                      }
                      else if (nbClient == 1)
                      {
+                         Joueur2 = socketServeur.AcceptTcpClient();
                          Lb_JoueurConnecter.Text = "Deuxième Joueur Trouvé démarage de la partie...";
-                     }
-                         
-                     this.Refresh();
+                         this.Refresh();
+                     }                         
+             
                  }            
-                 Btn_DémarrerServeur.Enabled = true;
-                
-                 
-
-              //  }                
+                 Btn_DémarrerServeur.Enabled = true;                              
 
             }
             catch(SocketException ex)
@@ -85,6 +90,8 @@ namespace BattleShip_Serveur
         }
         private void FermerServeur()
         {
+            Joueur1.Close();
+            Joueur2.Close();
             socketServeur.Stop();
             socketServeur = null;
         }

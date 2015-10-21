@@ -38,16 +38,14 @@ namespace Battleship
 
             Choisir_Position form = new Choisir_Position();
 
-            form.ShowDialog();
-
-            
+            form.ShowDialog();           
 
         }
         private void SeConnecter()
         {
-            TcpClient client = new TcpClient();
-            client.Connect("localhost",1234);
-            
+                  
+                TcpClient client = new TcpClient();
+                client.Connect("localhost",1234);      
         }
     }
 }
