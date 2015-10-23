@@ -1,1 +1,0 @@
-C:\Users\201356187\Desktop\BattleShip_ClientServeur_A15\ThreadTestCsharp\ThreadTestCsharp\bin\Debug\ThreadTestCsharp.exe.config

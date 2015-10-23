@@ -17,13 +17,11 @@ namespace BattleShip_Serveur
        IPAddress adresseIp;
        TcpClient Joueur1;
        TcpClient Joueur2;
-       String information;
        Boolean ServerOuvert;
        FormServeur leform;
        public ThreadRecevoir(FormServeur FormParent)
        {
-           information = "";    
-           leform = FormParent;
+              leform = FormParent;
        }
 
        public void setBooleanServeur(Boolean serveur)
@@ -66,7 +64,9 @@ namespace BattleShip_Serveur
                    
                    while(ServerOuvert)
                    {
-                       //Tu update la grille des deux joueurs pis tu leur renvoie leurs informations
+                       /*Tu update la grille des deux joueurs pis tu leur renvoie leurs informations*/
+
+
                    }
                    
             }

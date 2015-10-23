@@ -1,5 +1,0 @@
-C:\Users\201356187\Desktop\BattleShip_ClientServeur_A15\thread\thread\bin\Debug\thread.dll
-C:\Users\201356187\Desktop\BattleShip_ClientServeur_A15\thread\thread\bin\Debug\thread.pdb
-C:\Users\201356187\Desktop\BattleShip_ClientServeur_A15\thread\thread\obj\Debug\thread.csprojResolveAssemblyReference.cache
-C:\Users\201356187\Desktop\BattleShip_ClientServeur_A15\thread\thread\obj\Debug\thread.dll
-C:\Users\201356187\Desktop\BattleShip_ClientServeur_A15\thread\thread\obj\Debug\thread.pdb
