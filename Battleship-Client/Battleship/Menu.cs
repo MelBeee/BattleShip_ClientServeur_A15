@@ -25,30 +25,86 @@ namespace Battleship
             
         }
 
-        private void flashButton2_Click(object sender, EventArgs e)
+        private void SeConnecter()
+        {
+                client = new TcpClient();
+                client.Connect("127.0.0.1", 1234);                      
+        }
+
+        private void BTN_Quit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void flashButton1_Click(object sender, EventArgs e)
-        {   
+        private void BTN_Start_Click(object sender, EventArgs e)
+        {
             try
             {
-                SeConnecter();
+                //SeConnecter();
 
                 Choisir_Position form = new Choisir_Position();
 
-                form.ShowDialog();           
-            }catch(Exception ex)
+                form.ShowDialog();
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show("Le serveur n'est pas encore ouvert");
 
             }   
         }
-        private void SeConnecter()
+
+        bool button;
+
+        private void BTN_Start_MouseDown(object sender, MouseEventArgs e)
         {
-                client = new TcpClient();
-                client.Connect("127.0.0.1", 1234);                      
+            if (button)
+                BTN_Start.BackColor = Color.LightSlateGray;
+            else
+                BTN_Quit.BackColor = Color.LightSlateGray;
+        }
+
+        private void BTN_Start_MouseEnter(object sender, EventArgs e)
+        {
+            BTN_Start.BackColor = Color.LightSteelBlue;
+            button = true; 
+        }
+
+        private void BTN_Start_MouseHover(object sender, EventArgs e)
+        {
+            if (button)
+                BTN_Start.BackColor = Color.LightSteelBlue;
+            else
+                BTN_Quit.BackColor = Color.LightSteelBlue;       
+        }
+
+        private void BTN_Start_MouseLeave(object sender, EventArgs e)
+        {
+            if (button)
+                BTN_Start.BackColor = Color.Transparent;
+            else
+                BTN_Quit.BackColor = Color.Transparent;
+        }
+
+        private void BTN_Start_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (button)
+                BTN_Start.BackColor = Color.LightSteelBlue;
+            else
+                BTN_Quit.BackColor = Color.LightSteelBlue;
+        }
+
+        private void BTN_Start_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (button)
+                BTN_Start.BackColor = Color.LightSteelBlue;
+            else
+                BTN_Quit.BackColor = Color.LightSteelBlue;
+        }
+
+        private void BTN_Quit_MouseEnter(object sender, EventArgs e)
+        {
+            BTN_Quit.BackColor = Color.LightSteelBlue;
+            button = false; 
         }
     }
 }

@@ -15,13 +15,13 @@ namespace Battleship
         char[] LetterArray = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
         int[] NumberArray = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-        Flotte maFlotte;
+        //Flotte maFlotte;
 
-        public PlancheJeu(Flotte uneFlotte)
+        public PlancheJeu()
         {
             InitializeComponent();
 
-            maFlotte = uneFlotte;
+            //maFlotte = uneFlotte;
         }
 
         private void PlancheJeu_Load(object sender, EventArgs e)
@@ -29,53 +29,53 @@ namespace Battleship
             LoadPlan(PN_Ennemi, "_F");
             LoadPlan(PN_Joueur, "_S");
 
-            LoadMesBateaux();
+           // LoadMesBateaux();
         }
 
-        private void LoadMesBateaux()
-        {
-            AfficheUnBateau(maFlotte.BattleShip);
-            AfficheUnBateau(maFlotte.Destroyeur);
-            AfficheUnBateau(maFlotte.Aircraft);
-            AfficheUnBateau(maFlotte.Patrol);
-            AfficheUnBateau(maFlotte.Submarine);
-        }
+        //private void LoadMesBateaux()
+        //{
+        //    AfficheUnBateau(maFlotte.BattleShip);
+        //    AfficheUnBateau(maFlotte.Destroyeur);
+        //    AfficheUnBateau(maFlotte.Aircraft);
+        //    AfficheUnBateau(maFlotte.Patrol);
+        //    AfficheUnBateau(maFlotte.Submarine);
+        //}
 
-        private void AfficheUnBateau(Bateau unBateau)
-        {
-            char lettre;
-            int chiffre;
-            Panel unPanel;
-            for (int i = 0; i < unBateau.Tab.Length; i++)
-            {
-                lettre = unBateau.Tab[i].letter;
-                chiffre = unBateau.Tab[i].number;
+        //private void AfficheUnBateau(Bateau unBateau)
+        //{
+        //    char lettre;
+        //    int chiffre;
+        //    Panel unPanel;
+        //    for (int i = 0; i < unBateau.Tab.Length; i++)
+        //    {
+        //        lettre = unBateau.Tab[i].letter;
+        //        chiffre = unBateau.Tab[i].number;
 
-                unPanel = new Panel();
-                unPanel.BackgroundImage = new Bitmap(Battleship.Properties.Resources.Bateau);
-                unPanel.Parent = PN_Joueur;
-                unPanel.Location = new Point(GetPosition(lettre) * 35, chiffre * 35);
-                unPanel.Height = 35;
-                unPanel.Width = 35;
-                unPanel.BorderStyle = BorderStyle.FixedSingle;
+        //        unPanel = new Panel();
+        //        unPanel.BackgroundImage = new Bitmap(Battleship.Properties.Resources.Bateau);
+        //        unPanel.Parent = PN_Joueur;
+        //        unPanel.Location = new Point(GetPosition(lettre) * 35, chiffre * 35);
+        //        unPanel.Height = 35;
+        //        unPanel.Width = 35;
+        //        unPanel.BorderStyle = BorderStyle.FixedSingle;
 
-            }
-        }
+        //    }
+        //}
 
-        private int GetPosition(char uneLettre)
-        {
-            int Position = 0;
+        //private int GetPosition(char uneLettre)
+        //{
+        //    int Position = 0;
 
-            for (int i = 0; i < LetterArray.Length; i++)
-            {
-                if(LetterArray[i] == uneLettre)
-                {
-                    Position = NumberArray[i];
-                }
-            }
+        //    for (int i = 0; i < LetterArray.Length; i++)
+        //    {
+        //        if(LetterArray[i] == uneLettre)
+        //        {
+        //            Position = NumberArray[i];
+        //        }
+        //    }
 
-            return Position;
-        }
+        //    return Position;
+        //}
 
         private void LoadPlan(Panel unPanel, string unString)
         {
@@ -124,6 +124,26 @@ namespace Battleship
                 Choisir_Position unForm = new Choisir_Position();
                 unForm.ShowDialog();
             }
+        }
+
+        private void BTN_NewGame_MouseEnter(object sender, EventArgs e)
+        {
+            BTN_NewGame.BackColor = Color.Gray;
+        }
+
+        private void BTN_NewGame_MouseLeave(object sender, EventArgs e)
+        {
+            BTN_NewGame.BackColor = Color.Transparent;
+        }
+
+        private void BTN_Quit_MouseEnter(object sender, EventArgs e)
+        {
+            BTN_Quit.BackColor = Color.Gray;
+        }
+
+        private void BTN_Quit_MouseLeave(object sender, EventArgs e)
+        {
+            BTN_Quit.BackColor = Color.Transparent;
         }
     }
 }
