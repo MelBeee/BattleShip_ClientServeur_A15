@@ -12,24 +12,26 @@ namespace Battleship
 {
     public partial class PlancheJeu : Form
     {
-        char[] LetterArray = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
-        int[] NumberArray = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        const char[] LetterArray = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
+        const int[] NumberArray = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-        //Flotte maFlotte;
+        //Flotte maFlotte; 
+        Flotte laFlotteEnnemi;
 
-        public PlancheJeu()
+        public PlancheJeu(/*Flotte uneFlotte, Flotte uneFlotteEnnemi*/)
         {
             InitializeComponent();
 
-            //maFlotte = uneFlotte;
+            // maFlotte = new Flotte(uneFlotte);
+            // laFlotteEnnemi = new Flotte(uneFlotteEnnemi);
         }
 
         private void PlancheJeu_Load(object sender, EventArgs e)
         {
-            LoadPlan(PN_Ennemi, "_F");
-            LoadPlan(PN_Joueur, "_S");
+            LoadPlan(PN_Ennemi, "_E");
+            LoadPlan(PN_Joueur, "_J");
 
-           // LoadMesBateaux();
+            //LoadMesBateaux();
         }
 
         //private void LoadMesBateaux()
@@ -68,7 +70,7 @@ namespace Battleship
 
         //    for (int i = 0; i < LetterArray.Length; i++)
         //    {
-        //        if(LetterArray[i] == uneLettre)
+        //        if (LetterArray[i] == uneLettre)
         //        {
         //            Position = NumberArray[i];
         //        }
@@ -93,7 +95,8 @@ namespace Battleship
                     unBouton.BackgroundImageLayout = ImageLayout.Stretch;
                     unBouton.Parent = unPanel;
                     unBouton.Location = new Point(i * 35, y * 35);
-                    unBouton.Name = "BTN_" + (i + 1).ToString() + LetterArray[y].ToString() + unString;
+                    unBouton.Name = "BTN_" + LetterArray[y].ToString() + (i + 1).ToString() + unString;
+                    unBouton.Click += new EventHandler(this.BTN_uneAction_Click);
 
                     if (unPanel == PN_Joueur)
                     {
@@ -103,9 +106,87 @@ namespace Battleship
             }
         }
 
-        private void BTN_Action_Over(object sender, EventArgs e)
+        private void EnvoyerInfoServeur(string uneInfo)
         {
 
+        }
+
+        private void RecevoirInfoServeur()
+        {
+
+        }
+
+        private void BTN_uneAction_Click(object sender, EventArgs e)
+        {
+            Button aClickedButton = (Button)sender;
+
+            aClickedButton.Enabled = false;
+
+            string name = aClickedButton.Name;
+
+            string position = name.Substring(4, 2);
+
+
+            if (VerifierTouche(position))
+            {
+                CreatePanelOverButton(PN_Ennemi, name);
+            }
+            else
+            {
+
+            }
+            EnvoyerInfoServeur(name);
+        }
+
+        private void CreatePanelOverButton(Panel unPanel, string name)
+        {
+            string panel = "_J";
+            if (unPanel.Name == "PN_Ennemi")
+                panel = "_E";
+
+            Button unBouton = unPanel.Controls.Find("BTN_" + name + panel, true).FirstOrDefault() as Button;
+
+            PictureBox unPB = new PictureBox();
+            unPB.BorderStyle = BorderStyle.FixedSingle;
+            unPB.Height = 35;
+            unPB.Width = 35;
+            unPB.BackgroundImage = new Bitmap(Battleship.Properties.Resources.Explosion_Fire);
+            unPB.BackgroundImageLayout = ImageLayout.Stretch;
+            unPB.Parent = unPanel;
+            unPB.Location = unBouton.Location;
+        }
+
+        private bool VerifierTouche(string name)
+        {
+            char lettre = char.Parse(name.Substring(1, 1));
+            int nombre = int.Parse(name.Substring(2, 1));
+            bool touche = false;
+
+            if (!touche)
+                touche = VerifierBateau(lettre, nombre, laFlotteEnnemi.Aircraft);
+            if (!touche)
+                touche = VerifierBateau(lettre, nombre, laFlotteEnnemi.BattleShip);
+            if (!touche)
+                touche = VerifierBateau(lettre, nombre, laFlotteEnnemi.Destroyeur);
+            if (!touche)
+                touche = VerifierBateau(lettre, nombre, laFlotteEnnemi.Patrol);
+            if (!touche)
+                touche = VerifierBateau(lettre, nombre, laFlotteEnnemi.Submarine);
+
+            return touche;
+        }
+
+        private bool VerifierBateau(char lettre, int nombre, Bateau unBateau)
+        {
+            for (int i = 0; i < unBateau.Tab.Length; i++)
+            {
+                if (unBateau.Tab[i].letter == lettre && unBateau.Tab[i].number == nombre)
+                {
+                    unBateau.Tab[i].touche = true;
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void BTN_Quit_Click(object sender, EventArgs e)

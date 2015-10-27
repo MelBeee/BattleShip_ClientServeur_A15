@@ -31,6 +31,16 @@ namespace Battleship
             unType = leType;
         }
 
+        public Flotte(Flotte uneFlotte)
+        {
+            BattleShip = uneFlotte.BattleShip;
+            Destroyeur = uneFlotte.Destroyeur;
+            Submarine = uneFlotte.Submarine;
+            Aircraft = uneFlotte.Aircraft;
+            Patrol = uneFlotte.Patrol;
+            unType = uneFlotte.unType;
+        }
+
         public bool FlotteDetruite()
         {
             if (BattleShip.NbreCasesTouche != BattleShip.NbreCases)
