@@ -19,13 +19,20 @@ namespace BattleShip_Serveur
       
        TcpClient Joueur1;
        TcpClient Joueur2;
+
        Boolean Joueur1EntrainDeJouer = false;
        Boolean Joueur2EntrainDeJouer = false;
+
+       //Si true Joueur1 sinon Joueur2
+       Boolean JoueurTour = true;
+       
        
        //Variable de transfert d'information
        NetworkStream CommunicationJoueur;
 
        Byte[] bytes = new Byte[1024];
+       Byte[] envoyezJoueur;
+       int infoJoueur; 
 
        FormServeur leform;
 
@@ -77,11 +84,24 @@ namespace BattleShip_Serveur
                  AttendreLesInfosBateaux();
 
 
-
+                 String AttaqueBateaux1;
                  while (ServeurOuvert && Joueur1EntrainDeJouer && Joueur2EntrainDeJouer)
                  {
-                       // Tu update la grille des deux joueurs pis tu leur renvoie leurs informations
-                       
+                     if (JoueurTour)
+                     {
+                         CommunicationJoueur = Joueur1.GetStream();
+                         infoJoueur = CommunicationJoueur.Read(bytes, 0, bytes.Length);
+                         AttaqueBateaux1 = System.Text.Encoding.ASCII.GetString(bytes, 0, infoJoueur);
+
+
+                         JoueurTour = false;
+                     }
+
+                     else
+                     {
+
+                     }
+                    
 
                  }
                    
@@ -94,20 +114,19 @@ namespace BattleShip_Serveur
 
        private void AttendreLesInfosBateaux()
        {
-           int infoJoueur;         
-           Byte[] envoyezJoueur;
+                   
+           
 
            while(!Joueur1EntrainDeJouer && !Joueur2EntrainDeJouer)
            {
                CommunicationJoueur = Joueur1.GetStream();
                if (!Joueur1EntrainDeJouer)
-               {
-                  
+               {                  
                    infoJoueur = CommunicationJoueur.Read(bytes, 0, bytes.Length);
                    if (infoJoueur != 0)
                    {
                         Joueur1BateauxPosition = System.Text.Encoding.ASCII.GetString(bytes, 0, infoJoueur);
-                        Joueur1EntrainDeJouer = true;  
+                        Joueur1EntrainDeJouer = true;                              
                    }                                  
                }
                else
