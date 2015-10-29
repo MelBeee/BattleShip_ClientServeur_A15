@@ -79,31 +79,12 @@ namespace BattleShip_Serveur
                          leform.Refresh();
                      }                  
                  }
-                 leform.Btn_DémarrerServeur.Enabled = true;
+                 leform.Btn_DémarrerServeur.Enabled = true;                 
 
                  AttendreLesInfosBateaux();
 
-
-                 String AttaqueBateaux1;
-                 while (ServeurOuvert && Joueur1EntrainDeJouer && Joueur2EntrainDeJouer)
-                 {
-                     if (JoueurTour)
-                     {
-                         CommunicationJoueur = Joueur1.GetStream();
-                         infoJoueur = CommunicationJoueur.Read(bytes, 0, bytes.Length);
-                         AttaqueBateaux1 = System.Text.Encoding.ASCII.GetString(bytes, 0, infoJoueur);
-
-
-                         JoueurTour = false;
-                     }
-
-                     else
-                     {
-
-                     }
-                    
-
-                 }
+                 BoucleJeu();
+                
                    
             }
             catch (SocketException ex)
@@ -112,11 +93,66 @@ namespace BattleShip_Serveur
             } 
        }
 
+       private void BoucleJeu()
+       {
+           String AttaqueBateaux1;
+           String AttaqueBateaux2;
+
+           while (ServeurOuvert && Joueur1EntrainDeJouer && Joueur2EntrainDeJouer)
+           {
+
+               while (JoueurTour)
+               {
+                   CommunicationJoueur = Joueur1.GetStream();
+                   infoJoueur = CommunicationJoueur.Read(bytes, 0, bytes.Length);  
+                  
+                   if(infoJoueur!=0)
+                   {                       
+                       AttaqueBateaux1 = System.Text.Encoding.ASCII.GetString(bytes, 0, infoJoueur);
+                       if (AttaqueBateaux1 != "Disconnected")
+                       {
+                         //Traitement des attaques                         
+                         if(CibleToucher())
+                         {
+
+                         }
+                         JoueurTour = false; 
+                       }
+                       else
+                       {
+                           Joueur1EntrainDeJouer = false;
+                       }
+                       
+                   }                                                      
+               }
+                
+               while(!JoueurTour)
+               {
+                   CommunicationJoueur = Joueur2.GetStream();
+                   infoJoueur = CommunicationJoueur.Read(bytes, 0, bytes.Length);
+                   if (infoJoueur != 0)
+                   {
+                       AttaqueBateaux2 = System.Text.Encoding.ASCII.GetString(bytes, 0, infoJoueur);
+                       if (AttaqueBateaux2 != "Disconnected")
+                       {
+                           //Traitement des attaques
+                           if (CibleToucher())
+                           {
+
+                           }
+                           JoueurTour = true;
+                       }
+                       else
+                       {
+                           Joueur2EntrainDeJouer = false;
+                       }                 
+                   } 
+               }
+           }
+       }
        private void AttendreLesInfosBateaux()
        {
-                   
-           
-
+                 
            while(!Joueur1EntrainDeJouer && !Joueur2EntrainDeJouer)
            {
                CommunicationJoueur = Joueur1.GetStream();
@@ -164,6 +200,12 @@ namespace BattleShip_Serveur
            CommunicationJoueur = Joueur2.GetStream();
            CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
                     
+       }
+
+
+       private Boolean CibleToucher()
+       {
+           return true;
        }
     }
 }
