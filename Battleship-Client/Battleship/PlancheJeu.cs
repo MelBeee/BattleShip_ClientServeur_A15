@@ -12,18 +12,16 @@ namespace Battleship
 {
     public partial class PlancheJeu : Form
     {
-        const char[] LetterArray = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
-        const int[] NumberArray = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        char[] LetterArray = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
+        int[] NumberArray = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
         //Flotte maFlotte; 
-        Flotte laFlotteEnnemi;
 
-        public PlancheJeu(/*Flotte uneFlotte, Flotte uneFlotteEnnemi*/)
+        public PlancheJeu(/*Flotte uneFlotte*/)
         {
             InitializeComponent();
 
             // maFlotte = new Flotte(uneFlotte);
-            // laFlotteEnnemi = new Flotte(uneFlotteEnnemi);
         }
 
         private void PlancheJeu_Load(object sender, EventArgs e)
@@ -106,16 +104,6 @@ namespace Battleship
             }
         }
 
-        private void EnvoyerInfoServeur(string uneInfo)
-        {
-
-        }
-
-        private void RecevoirInfoServeur()
-        {
-
-        }
-
         private void BTN_uneAction_Click(object sender, EventArgs e)
         {
             Button aClickedButton = (Button)sender;
@@ -129,16 +117,15 @@ namespace Battleship
 
             if (VerifierTouche(position))
             {
-                CreatePanelOverButton(PN_Ennemi, name);
+                CreatePanelOverButton(PN_Ennemi, name, Battleship.Properties.Resources.Explosion_Fire);
             }
             else
             {
-
+                CreatePanelOverButton(PN_Ennemi, name, Battleship.Properties.Resources.WaterExplosion);
             }
-            EnvoyerInfoServeur(name);
         }
 
-        private void CreatePanelOverButton(Panel unPanel, string name)
+        private void CreatePanelOverButton(Panel unPanel, string name, Bitmap Image)
         {
             string panel = "_J";
             if (unPanel.Name == "PN_Ennemi")
@@ -150,10 +137,15 @@ namespace Battleship
             unPB.BorderStyle = BorderStyle.FixedSingle;
             unPB.Height = 35;
             unPB.Width = 35;
-            unPB.BackgroundImage = new Bitmap(Battleship.Properties.Resources.Explosion_Fire);
+            unPB.BackgroundImage = Image;
             unPB.BackgroundImageLayout = ImageLayout.Stretch;
             unPB.Parent = unPanel;
             unPB.Location = unBouton.Location;
+        }
+
+        private void ThreadJeu()
+        {
+            // Attendre le mouvement de l'autre joueur 
         }
 
         private bool VerifierTouche(string name)
@@ -162,18 +154,18 @@ namespace Battleship
             int nombre = int.Parse(name.Substring(2, 1));
             bool touche = false;
 
-            if (!touche)
-                touche = VerifierBateau(lettre, nombre, laFlotteEnnemi.Aircraft);
-            if (!touche)
-                touche = VerifierBateau(lettre, nombre, laFlotteEnnemi.BattleShip);
-            if (!touche)
-                touche = VerifierBateau(lettre, nombre, laFlotteEnnemi.Destroyeur);
-            if (!touche)
-                touche = VerifierBateau(lettre, nombre, laFlotteEnnemi.Patrol);
-            if (!touche)
-                touche = VerifierBateau(lettre, nombre, laFlotteEnnemi.Submarine);
+            // ici j'envois la position 
 
             return touche;
+        }
+
+        private bool RecevoirTouche()
+        {
+            bool touche = false;
+
+            // ici je revois la position
+
+            return touche; 
         }
 
         private bool VerifierBateau(char lettre, int nombre, Bateau unBateau)
