@@ -158,30 +158,35 @@ namespace Battleship
 
             if (VerifierTouche(position))
             {
-                CreatePanelOverButton(PN_Ennemi, name, Battleship.Properties.Resources.Explosion_Fire);
+                CreatePanelOverButton(PN_Ennemi, name, Battleship.Properties.Resources.Explosion_Fire, sender);
             }
             else
             {
-                CreatePanelOverButton(PN_Ennemi, name, Battleship.Properties.Resources.WaterExplosion);
+                CreatePanelOverButton(PN_Ennemi, name, Battleship.Properties.Resources.WaterExplosion, sender);
             }
         }
 
-        private void CreatePanelOverButton(Panel unPanel, string name, Bitmap Image)
+        private void CreatePanelOverButton(Panel unPanel, string name, Bitmap Image, object sender)
         {
-            string panel = "_J";
-            if (unPanel.Name == "PN_Ennemi")
-                panel = "_E";
+            try
+            {
+                Button unBouton = (Button)sender;
 
-            Button unBouton = unPanel.Controls.Find("BTN_" + name + panel, true).FirstOrDefault() as Button;
-
-            PictureBox unPB = new PictureBox();
-            unPB.BorderStyle = BorderStyle.FixedSingle;
-            unPB.Height = 35;
-            unPB.Width = 35;
-            unPB.BackgroundImage = Image;
-            unPB.BackgroundImageLayout = ImageLayout.Stretch;
-            unPB.Parent = unPanel;
-            unPB.Location = unBouton.Location;
+                PictureBox unPB = new PictureBox();
+                unPB.BorderStyle = BorderStyle.FixedSingle;
+                unPB.Height = 35;
+                unPB.Width = 35;
+                unPB.BackgroundImage = Image;
+                unPB.BackgroundImageLayout = ImageLayout.Stretch;
+                unPB.Parent = unPanel;
+                unPB.Location = unBouton.Location;
+                unPB.BringToFront();
+                unPB.BackColor = Color.Transparent;
+            }
+            catch(Exception ext)
+            {
+                MessageBox.Show(ext.ToString());
+            }
         }
 
         private void ThreadJeu()
@@ -191,8 +196,8 @@ namespace Battleship
 
         private bool VerifierTouche(string name)
         {
-            char lettre = char.Parse(name.Substring(1, 1));
-            int nombre = int.Parse(name.Substring(2, 1));
+            char lettre = char.Parse(name.Substring(0, 1));
+            int nombre = int.Parse(name.Substring(1, 1));
             bool touche = false;
 
             // ici j'envois la position 

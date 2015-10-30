@@ -49,7 +49,6 @@ namespace Battleship
             catch (Exception ex)
             {
                 MessageBox.Show("Le serveur n'est pas encore ouvert");
-
             }   
         }
 
