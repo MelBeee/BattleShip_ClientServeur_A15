@@ -37,12 +37,12 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Bernard MT Condensed", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Azure;
-            this.label1.Location = new System.Drawing.Point(103, 37);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(77, 30);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(348, 95);
+            this.label1.Size = new System.Drawing.Size(279, 76);
             this.label1.TabIndex = 0;
             this.label1.Text = "Battleship";
             // 
@@ -52,10 +52,9 @@
             this.BTN_Start.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_Start.Font = new System.Drawing.Font("Bernard MT Condensed", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTN_Start.ForeColor = System.Drawing.Color.Azure;
-            this.BTN_Start.Location = new System.Drawing.Point(139, 192);
-            this.BTN_Start.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BTN_Start.Location = new System.Drawing.Point(104, 156);
             this.BTN_Start.Name = "BTN_Start";
-            this.BTN_Start.Size = new System.Drawing.Size(276, 74);
+            this.BTN_Start.Size = new System.Drawing.Size(207, 60);
             this.BTN_Start.TabIndex = 3;
             this.BTN_Start.Text = "Start";
             this.BTN_Start.UseVisualStyleBackColor = false;
@@ -73,10 +72,9 @@
             this.BTN_Quit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_Quit.Font = new System.Drawing.Font("Bernard MT Condensed", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTN_Quit.ForeColor = System.Drawing.Color.Azure;
-            this.BTN_Quit.Location = new System.Drawing.Point(139, 274);
-            this.BTN_Quit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BTN_Quit.Location = new System.Drawing.Point(104, 223);
             this.BTN_Quit.Name = "BTN_Quit";
-            this.BTN_Quit.Size = new System.Drawing.Size(276, 74);
+            this.BTN_Quit.Size = new System.Drawing.Size(207, 60);
             this.BTN_Quit.TabIndex = 4;
             this.BTN_Quit.Text = "Quitter";
             this.BTN_Quit.UseVisualStyleBackColor = false;
@@ -90,17 +88,16 @@
             // 
             // Menu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(968, 528);
+            this.ClientSize = new System.Drawing.Size(726, 429);
             this.Controls.Add(this.BTN_Quit);
             this.Controls.Add(this.BTN_Start);
             this.Controls.Add(this.label1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Menu";
             this.Text = "Battleship";
             this.Load += new System.EventHandler(this.Form1_Load);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Battleship
 {
-    public enum Type
+    public enum TypeFlotte
     {
         allier,
         ennemi
@@ -19,9 +19,9 @@ namespace Battleship
         public Bateau Submarine;
         public Bateau Aircraft;
         public Bateau Patrol;
-        Type unType;
+        TypeFlotte unType;
 
-        public Flotte(Position[] a_BattleShip, Position[] a_Destroyeur, Position[] a_Submarine, Position[] a_Aircraft, Position[] a_Patrol, Type leType)
+        public Flotte(Position[] a_BattleShip, Position[] a_Destroyeur, Position[] a_Submarine, Position[] a_Aircraft, Position[] a_Patrol, TypeFlotte leType)
         {
             BattleShip = new Bateau(TypeBateau.BattleShip, 5, false, 0, a_BattleShip);
             Destroyeur = new Bateau(TypeBateau.Destroyer, 4, false, 0, a_Destroyeur);
