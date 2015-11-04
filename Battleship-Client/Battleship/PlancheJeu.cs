@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
+using System.Net.Sockets;
+using System.IO;
 
 namespace Battleship
 {
@@ -16,22 +19,27 @@ namespace Battleship
         int[] NumberArray = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
         Flotte maFlotte;
+    
+        TcpClient unClient;
+        NetworkStream netStream;
 
-        public PlancheJeu(/*Flotte uneFlotte*/)
+        public PlancheJeu(/*Flotte uneFlotte,*/ TcpClient client)
         {
             InitializeComponent();
 
             InitializeFlotte();
+            unClient = client;
+            netStream = unClient.GetStream();
             //maFlotte = new Flotte(uneFlotte);
         }
 
         private void PlancheJeu_Load(object sender, EventArgs e)
         {
             LoadPlan(PN_Ennemi, "_E");
-            LoadPlan(PN_Joueur, "_J");
-
-
+            LoadPlan(PN_Joueur, "_A");
+            
         }
+
         private void SetLesTrucs(int index, char lettre, int nombre, bool etat, Position[] tab)
         {
             tab[index].letter = lettre;
@@ -196,22 +204,105 @@ namespace Battleship
 
         private bool VerifierTouche(string name)
         {
-            char lettre = char.Parse(name.Substring(0, 1));
-            int nombre = int.Parse(name.Substring(1, 1));
             bool touche = false;
+            string reponse = "";
 
-            // ici j'envois la position 
+            if (netStream.CanWrite)
+            {
+                Byte[] sendBytes = Encoding.UTF8.GetBytes(name);
+                netStream.Write(sendBytes, 0, sendBytes.Length);
+            }
+
+            if(netStream.CanRead)
+            {
+                byte[] bytes = new byte[unClient.ReceiveBufferSize];
+
+                netStream.Read(bytes, 0, (int)unClient.ReceiveBufferSize);
+
+                reponse = Encoding.UTF8.GetString(bytes);
+            }
+
+            int index = reponse.IndexOf('/');
+            if(index > 0)
+            {
+                if(reponse.Substring(0, index) == "true")
+                {
+                    touche = true;
+                }
+                
+                if(reponse.Substring(index+1, reponse.Length) != "aucun")
+                {
+                    string bateaudetruit = reponse.Substring(index + 1, reponse.Length);
+
+                    AnalyseBateau(bateaudetruit);
+                }
+            }
 
             return touche;
+        }
+
+        private void AnalyseBateau(string nom)
+        {
+            switch(nom)
+            {
+                case "Battleship":
+                    LB_E_1.BackColor = Color.FromArgb(255, 128, 128);
+                    break;
+                case "PatrolBoat":
+                    LB_E_2.BackColor = Color.FromArgb(255, 128, 128);
+                    break;
+                case "Submarine":
+                    LB_E_3.BackColor = Color.FromArgb(255, 128, 128);
+                    break;
+                case "Destroyer":
+                    LB_E_4.BackColor = Color.FromArgb(255, 128, 128);
+                    break;
+                case "AircraftCarrier":
+                    LB_E_5.BackColor = Color.FromArgb(255, 128, 128);
+                    break;
+            }
         }
 
         private bool RecevoirTouche()
         {
             bool touche = false;
+            string reponse = "";
 
-            // ici je revois la position
+            if (netStream.CanRead)
+            {
+                byte[] bytes = new byte[unClient.ReceiveBufferSize];
+
+                netStream.Read(bytes, 0, (int)unClient.ReceiveBufferSize);
+
+                reponse = Encoding.UTF8.GetString(bytes);
+            }
+
+            if(reponse != "")
+            {
+                AnalyseTouche(reponse);
+            }
 
             return touche;
+        }
+
+        private void AnalyseTouche(string touche)
+        {
+            Button btn = this.Controls.Find("BTN_" + touche + "_A", true).FirstOrDefault() as Button;
+
+            VerifierFlotte(touche);
+            CreatePanelOverButton(PN_Joueur, touche, Battleship.Properties.Resources.Explosion_Fire, btn);
+        }
+
+        private bool VerifierFlotte(string touche)
+        {
+            bool toucher = false;
+
+            char lettre = char.Parse(touche.Substring(0, 1));
+            int chiffre = int.Parse(touche.Substring(1, 1));
+
+            toucher = maFlotte.VerifierTouche(lettre, chiffre);
+
+            return toucher;
         }
 
         private bool VerifierBateau(char lettre, int nombre, Bateau unBateau)
@@ -229,19 +320,14 @@ namespace Battleship
 
         private void BTN_Quit_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Etes vous sur de vouloir quitter la partie en cours ? ", "Attention !", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
-            {
-                this.Close();
-            }
+            FermerForm();
         }
 
         private void BTN_NewGame_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Etes vous sur de vouloir quitter la partie en cours pour en recommencer une nouvelle ? ", "Attention !", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
             {
-                this.Visible = false;
-                Choisir_Position unForm = new Choisir_Position();
-                unForm.ShowDialog();
+                this.Close();
             }
         }
 
@@ -269,5 +355,27 @@ namespace Battleship
         {
             LoadMesBateaux();
         }
+
+        private void PlancheJeu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            FermerForm();
+        }
+
+        private void FermerForm()
+        {
+            if (MessageBox.Show("Etes vous sur de vouloir quitter la partie en cours ? ", "Attention !", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
+            {
+                this.Close();
+                if(netStream.CanWrite)
+                {
+                    Byte[] sendBytes = Encoding.UTF8.GetBytes("Disconnected");
+                    netStream.Write(sendBytes, 0, sendBytes.Length);
+                    netStream.Close();
+                    unClient.Close();
+                }
+            }
+        }
+
+
     }
 }

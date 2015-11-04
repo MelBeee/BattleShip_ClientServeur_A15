@@ -52,9 +52,61 @@ namespace Battleship
             if (Aircraft.NbreCasesTouche != Aircraft.NbreCases)
                 return false;
             if (Patrol.NbreCasesTouche != Patrol.NbreCases)
-                return false; 
+                return false;
 
             return true;
+        }
+
+        public bool VerifierTouche(char Lettre, int Nombre)
+        {
+            bool touche = false;
+
+            if (VerifierBateau(BattleShip, Lettre, Nombre))
+                touche = true;
+            if (VerifierBateau(Patrol, Lettre, Nombre))
+                touche = true;
+            if (VerifierBateau(Destroyeur, Lettre, Nombre))
+                touche = true;
+            if (VerifierBateau(Aircraft, Lettre, Nombre))
+                touche = true;
+            if (VerifierBateau(Submarine, Lettre, Nombre))
+                touche = true; 
+
+            return touche;
+        }
+
+        private bool VerifierBateau(Bateau bateau, char lettre, int nombre)
+        {
+            bool touche = false;
+            bool detruit = true;
+
+            for (int i = 0; i < bateau.Tab.Length; i++)
+            {
+                if (bateau.Tab[i].letter == lettre && bateau.Tab[i].number == nombre)
+                {
+                    touche = true;
+                    bateau.Tab[i].touche = true;
+                }
+
+                if (detruit)
+                {
+                    if (bateau.Tab[i].touche)
+                    {
+                        detruit = true;
+                    }
+                    else
+                    {
+                        detruit = false;
+                    }
+                }
+            }
+
+            if (!detruit)
+            {
+                bateau.Detruit = true;
+            }
+
+            return touche;
         }
     }
 }
