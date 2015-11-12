@@ -36,8 +36,11 @@ namespace BattleShip_Serveur
 
        FormServeur leform;
 
-       String Joueur1BateauxPosition;
-       String Joueur2BateauxPosition;
+       String Joueur1BateauxPosition = "";
+       String Joueur2BateauxPosition = "";
+
+       String AttaqueBateaux1 = "";
+       String AttaqueBateaux2 ="";
 
 
        public ThreadRecevoir(FormServeur FormParent)
@@ -84,6 +87,9 @@ namespace BattleShip_Serveur
 
                  AttendreLesInfosBateaux();
 
+                 leform.Lb_JoueurConnecter.Text = "Le jeu est commencé";
+                 leform.Refresh();
+
                  BoucleJeu();
                 
                    
@@ -96,14 +102,18 @@ namespace BattleShip_Serveur
 
        private void BoucleJeu()
        {
-           String AttaqueBateaux1;
-           String AttaqueBateaux2;
+           CommunicationJoueur = Joueur1.GetStream(); 
+           envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("StartTour");
+           CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+           CommunicationJoueur = Joueur2.GetStream();
+           envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("WaitTour");
+           CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
 
            while (ServeurOuvert && Joueur1EntrainDeJouer && Joueur2EntrainDeJouer)
            {	  
                while (JoueurTour)
                {
-                   CommunicationJoueur = Joueur1.GetStream();
+                   CommunicationJoueur = Joueur1.GetStream();                    
                    infoJoueur = CommunicationJoueur.Read(bytes, 0, bytes.Length);  
                   
                    if(infoJoueur!=0)
@@ -150,6 +160,10 @@ namespace BattleShip_Serveur
 			   while(!JoueurTour)
 			   {
 			 	   CommunicationJoueur = Joueur2.GetStream();
+
+                   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("StartTour");
+                   CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+
 			 	   infoJoueur = CommunicationJoueur.Read(bytes, 0, bytes.Length);
 			 	   if (infoJoueur != 0)
 			 	   {
@@ -187,16 +201,41 @@ namespace BattleShip_Serveur
 			 			   Joueur2EntrainDeJouer = false;
 			 		   }                 
 			 	   } 
-			   } 			   
+			   }
+               CheckFinDePartie(); 
            }
        }
 
 	   private void CheckFinDePartie()
 	   {
-			if(Joueur1BateauxPosition =="BattleShip:----/Patrol:-/Submarine:---/Destroyer:---/Submarine:--/AircraftCarrier:--/")
+           if (Joueur1BateauxPosition == "BattleShip:----/PatrolBoat:-/Destroyer:---/Submarine:--/AircraftCarrier:--/" || AttaqueBateaux1 == "Disconnected")
 			{			
+                //Joueur 2 win
+                envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Gagné");
+                CommunicationJoueur = Joueur2.GetStream();
+                CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+
+
+                //Joueur 1 lost
+                envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Perdu");
+                CommunicationJoueur = Joueur1.GetStream();
+                CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
 
 			}
+           if (Joueur2BateauxPosition == "BattleShip:----/PatrolBoat:-/Destroyer:---/Submarine:--/AircraftCarrier:--/" || AttaqueBateaux2 == "Disconnected")
+            {
+                //Joueur 1 win
+                envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Gagné");
+                CommunicationJoueur = Joueur1.GetStream();
+                CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+
+
+                //Joueur 2 lost
+                envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Perdu");
+                CommunicationJoueur = Joueur2.GetStream();
+                CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+
+            }
 	   }
 
        private void AttendreLesInfosBateaux()
@@ -211,33 +250,25 @@ namespace BattleShip_Serveur
                    if (infoJoueur != 0)
                    {
                         Joueur1BateauxPosition = System.Text.Encoding.ASCII.GetString(bytes, 0, infoJoueur);
-                        Joueur1EntrainDeJouer = true;                              
+                        Joueur1EntrainDeJouer = true;
+                        envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Attendre");
+                        CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);                               
                    }                                  
                }
-               else
-               {
-                   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Attendre pour l'autre Joueur");
-                   CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);                  
-                  
-               }
-               
+           
                
                CommunicationJoueur = Joueur2.GetStream();
                if(!Joueur2EntrainDeJouer)
-               {
-                   
+               {                   
                    infoJoueur = CommunicationJoueur.Read(bytes, 0, bytes.Length);
                    if (infoJoueur != 0)
                    {
                         Joueur2BateauxPosition = System.Text.Encoding.ASCII.GetString(bytes, 0, infoJoueur);
-                        Joueur2EntrainDeJouer = true; 
+                        Joueur2EntrainDeJouer = true;
+                        envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Attendre");
+                        CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);  
                    }                            
-               }
-               else
-               {
-                   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Attendre pour l'autre Joueur");
-                   CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);  
-               }
+               }              
            }
            
            //Envoie Du Serveur qui dit de commencer la partie

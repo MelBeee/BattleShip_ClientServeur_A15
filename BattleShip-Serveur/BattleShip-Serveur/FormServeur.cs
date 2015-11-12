@@ -47,6 +47,7 @@ namespace BattleShip_Serveur
             leThreadRecevoir.setBooleanServeur(true);
             ServeurOuvert = leThreadRecevoir.getBooleanServeur();
             t = new Thread(new ThreadStart(leThreadRecevoir.ThreadRecevoirLoop));
+            t.IsBackground = true;
             t.Start();    
         }
         private void FermerServeur()
