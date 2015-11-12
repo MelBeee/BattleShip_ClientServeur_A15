@@ -205,7 +205,7 @@ namespace Battleship
             }
 
             PN_Joueur.Enabled = false;
-            this.Refresh();
+            
             unThreadJeu = new ThreadJeu(unClient, netStream);
             Thread unThread = new Thread(new ThreadStart(unThreadJeu.Demarrer));
             unThread.Start();
@@ -428,7 +428,5 @@ namespace Battleship
         {
             DeterminerLeTour();
         }
-
-
     }
 }

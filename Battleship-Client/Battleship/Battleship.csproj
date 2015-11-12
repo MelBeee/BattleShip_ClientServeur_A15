@@ -69,6 +69,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ThreadJeu.cs" />
     <EmbeddedResource Include="Choisir_Position.resx">
       <DependentUpon>Choisir_Position.cs</DependentUpon>
     </EmbeddedResource>

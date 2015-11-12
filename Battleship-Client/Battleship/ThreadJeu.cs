@@ -22,21 +22,16 @@ namespace Battleship
 
         public void Demarrer()
         {
-            RecevoirTouche();
-        }
-
-        public string GetPosition()
-        {
-            return PositionRecu;
-        }
-
-        private void RecevoirTouche()
-        {
             byte[] bytes = new byte[unClient.ReceiveBufferSize];
 
             netStream.Read(bytes, 0, (int)unClient.ReceiveBufferSize);
 
             PositionRecu = Encoding.UTF8.GetString(bytes);
+        }
+
+        public string GetPosition()
+        {
+            return PositionRecu;
         }
     }
 }
