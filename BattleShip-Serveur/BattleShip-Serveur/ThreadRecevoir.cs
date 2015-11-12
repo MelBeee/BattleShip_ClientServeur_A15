@@ -38,7 +38,8 @@ namespace BattleShip_Serveur
 
        String Joueur1BateauxPosition;
        String Joueur2BateauxPosition;
-          
+
+
        public ThreadRecevoir(FormServeur FormParent)
        {
               leform = FormParent;
@@ -99,8 +100,7 @@ namespace BattleShip_Serveur
            String AttaqueBateaux2;
 
            while (ServeurOuvert && Joueur1EntrainDeJouer && Joueur2EntrainDeJouer)
-           {
-
+           {	  
                while (JoueurTour)
                {
                    CommunicationJoueur = Joueur1.GetStream();
@@ -112,44 +112,93 @@ namespace BattleShip_Serveur
                        if (AttaqueBateaux1 != "Disconnected")
                        {
                          //Traitement des attaques                         
-                         if(CibleToucher())
+                         if(CibleToucher(AttaqueBateaux1))
                          {
-
+							 String touchercouler =  CheckSiCouler()  ;
+							 if(touchercouler !="")
+							 {
+								 envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("true/" + touchercouler); 								
+								 CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+							 }
+							 else
+							 {
+								 envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("true/aucun");
+								 CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+							 }							 
                          }
+						 else
+						 {
+							 envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("false/aucun");
+							 CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+						 }
+
+						 CommunicationJoueur = Joueur2.GetStream();
+						 envoyezJoueur = System.Text.Encoding.ASCII.GetBytes(AttaqueBateaux1);
+						 CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+
                          JoueurTour = false; 
                        }
                        else
                        {
                            Joueur1EntrainDeJouer = false;
-                       }
-                       
+						   JoueurTour = false; 
+                       }                          
                    }                                                      
                }
-                
-               while(!JoueurTour)
-               {
-                   CommunicationJoueur = Joueur2.GetStream();
-                   infoJoueur = CommunicationJoueur.Read(bytes, 0, bytes.Length);
-                   if (infoJoueur != 0)
-                   {
-                       AttaqueBateaux2 = System.Text.Encoding.ASCII.GetString(bytes, 0, infoJoueur);
-                       if (AttaqueBateaux2 != "Disconnected")
-                       {
-                           //Traitement des attaques
-                           if (CibleToucher())
-                           {
-
-                           }
-                           JoueurTour = true;
-                       }
-                       else
-                       {
-                           Joueur2EntrainDeJouer = false;
-                       }                 
-                   } 
-               }
+			   CheckFinDePartie();
+			     			   
+			   while(!JoueurTour)
+			   {
+			 	   CommunicationJoueur = Joueur2.GetStream();
+			 	   infoJoueur = CommunicationJoueur.Read(bytes, 0, bytes.Length);
+			 	   if (infoJoueur != 0)
+			 	   {
+			 		   AttaqueBateaux2 = System.Text.Encoding.ASCII.GetString(bytes, 0, infoJoueur);
+			 		   if (AttaqueBateaux2 != "Disconnected")
+			 		   {
+			 			   //Traitement des attaques
+			 			   if (CibleToucher(AttaqueBateaux2))
+			 			   {
+			 				   String touchercouler = CheckSiCouler();
+			 				   if (touchercouler != "")
+			 				   {
+			 					   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("true/" + touchercouler);
+			 					   CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+			 				   }
+			 				   else
+			 				   {
+			 					   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("true/aucun");
+			 					   CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+			 				   }
+			 			   }
+			 			   else
+			 			   {
+			 				   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("false/aucun");
+			 				   CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+			 			   }
+			 
+			 			   CommunicationJoueur = Joueur1.GetStream();
+			 			   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes(AttaqueBateaux2);
+			 			   CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+			 			   JoueurTour = false; 
+			 		   }
+			 		   else
+			 		   {
+			 			   Joueur2EntrainDeJouer = false;
+			 		   }                 
+			 	   } 
+			   } 			   
            }
        }
+
+	   private void CheckFinDePartie()
+	   {
+			if(Joueur1BateauxPosition =="BattleShip:----/Patrol:-/Submarine:---/Destroyer:---/Submarine:--/AircraftCarrier:--/")
+			{			
+
+			}
+	   }
+
        private void AttendreLesInfosBateaux()
        {
                  
@@ -203,9 +252,42 @@ namespace BattleShip_Serveur
        }
 
 
-       private Boolean CibleToucher()
+       private Boolean CibleToucher(String attaque)
        {
-           return true;
+		   Boolean toucher =false;
+		   
+		   if( JoueurTour && Joueur1BateauxPosition.Contains(attaque) )
+		   {   			  
+			   Joueur1BateauxPosition.Trim(attaque.ToCharArray(0, attaque.Length));
+			   toucher = true;
+		   }
+		   else if(!JoueurTour && Joueur2BateauxPosition.Contains(attaque))
+		   {
+			   Joueur2BateauxPosition.Trim(attaque.ToCharArray(0, attaque.Length));
+			   toucher = true;
+		   }		
+           return toucher;
        }
+
+
+	   private String CheckSiCouler()
+	   {
+		   String ToucherCouler = "";
+
+		   if (Joueur1BateauxPosition.Contains("Battleship:----/") || Joueur2BateauxPosition.Contains("Battleship:----/"))
+			   ToucherCouler = "Battleship";
+		   else if (Joueur1BateauxPosition.Contains("PatrolBoat:-/") || Joueur2BateauxPosition.Contains("PatrolBoat:-/"))
+			   ToucherCouler = "PatrolBoat";
+		   else if (Joueur1BateauxPosition.Contains("Destroyer:---/") || Joueur2BateauxPosition.Contains("Destroyer:---/"))
+			   ToucherCouler = "Destroyer";
+		   else if (Joueur1BateauxPosition.Contains("Submarine:--/") || Joueur2BateauxPosition.Contains("Submarine:--/"))
+			   ToucherCouler = "Submarine";
+		   else if (Joueur1BateauxPosition.Contains("AircraftCarrier:--/") || Joueur2BateauxPosition.Contains("AircraftCarrier:--/"))
+			   ToucherCouler = "AircraftCarrier"; 
+		   
+		   return ToucherCouler;
+	   }
     }
+	  
+
 }

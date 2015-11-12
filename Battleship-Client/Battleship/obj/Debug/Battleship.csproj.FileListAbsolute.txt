@@ -89,3 +89,6 @@ C:\Users\Mélissa\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship-Clien
 C:\Users\Mélissa\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship-Client\Battleship\obj\Debug\Battleship.PlancheJeu.resources
 C:\Users\Mélissa\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship-Client\Battleship\obj\Debug\Battleship.Properties.Resources.resources
 C:\Users\Mélissa\Documents\GitHub\BattleShip_ClientServeur_A15\Battleship-Client\Battleship\obj\Debug\Battleship.csproj.GenerateResource.Cache
+C:\Users\Charlie\Desktop\BattleShip_ClientServeur_A15\Battleship-Client\Battleship\bin\Debug\Battleship.exe.config
+C:\Users\Charlie\Desktop\BattleShip_ClientServeur_A15\Battleship-Client\Battleship\obj\Debug\Battleship.exe
+C:\Users\Charlie\Desktop\BattleShip_ClientServeur_A15\Battleship-Client\Battleship\obj\Debug\Battleship.pdb
