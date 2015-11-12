@@ -64,7 +64,6 @@
             this.label32 = new System.Windows.Forms.Label();
             this.BTN_NewGame = new System.Windows.Forms.Button();
             this.BTN_Quit = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.LB_E_1 = new System.Windows.Forms.Label();
             this.LB_E_2 = new System.Windows.Forms.Label();
             this.LB_E_3 = new System.Windows.Forms.Label();
@@ -75,22 +74,21 @@
             this.LB_A_3 = new System.Windows.Forms.Label();
             this.LB_A_2 = new System.Windows.Forms.Label();
             this.LB_A_1 = new System.Windows.Forms.Label();
+            this.LB_Tour = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // PN_Joueur
             // 
-            this.PN_Joueur.Location = new System.Drawing.Point(133, 123);
-            this.PN_Joueur.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PN_Joueur.Location = new System.Drawing.Point(100, 100);
             this.PN_Joueur.Name = "PN_Joueur";
-            this.PN_Joueur.Size = new System.Drawing.Size(467, 431);
+            this.PN_Joueur.Size = new System.Drawing.Size(350, 350);
             this.PN_Joueur.TabIndex = 0;
             // 
             // PN_Ennemi
             // 
-            this.PN_Ennemi.Location = new System.Drawing.Point(665, 123);
-            this.PN_Ennemi.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PN_Ennemi.Location = new System.Drawing.Point(499, 100);
             this.PN_Ennemi.Name = "PN_Ennemi";
-            this.PN_Ennemi.Size = new System.Drawing.Size(467, 431);
+            this.PN_Ennemi.Size = new System.Drawing.Size(350, 350);
             this.PN_Ennemi.TabIndex = 1;
             // 
             // label1
@@ -99,10 +97,9 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(617, 128);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(463, 104);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 36);
+            this.label1.Size = new System.Drawing.Size(24, 28);
             this.label1.TabIndex = 2;
             this.label1.Text = "A";
             // 
@@ -112,10 +109,9 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(619, 300);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(464, 244);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(27, 36);
+            this.label2.Size = new System.Drawing.Size(22, 28);
             this.label2.TabIndex = 3;
             this.label2.Text = "E";
             // 
@@ -125,10 +121,9 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(619, 343);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(464, 279);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(27, 36);
+            this.label3.Size = new System.Drawing.Size(22, 28);
             this.label3.TabIndex = 4;
             this.label3.Text = "F";
             // 
@@ -138,10 +133,9 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(617, 256);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(463, 208);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(31, 36);
+            this.label4.Size = new System.Drawing.Size(25, 28);
             this.label4.TabIndex = 5;
             this.label4.Text = "D";
             // 
@@ -151,10 +145,9 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(619, 213);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(464, 173);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(27, 36);
+            this.label5.Size = new System.Drawing.Size(22, 28);
             this.label5.TabIndex = 6;
             this.label5.Text = "C";
             // 
@@ -164,10 +157,9 @@
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(617, 170);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(463, 138);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(31, 36);
+            this.label6.Size = new System.Drawing.Size(25, 28);
             this.label6.TabIndex = 7;
             this.label6.Text = "B";
             // 
@@ -177,10 +169,9 @@
             this.label7.BackColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(617, 385);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Location = new System.Drawing.Point(463, 313);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(31, 36);
+            this.label7.Size = new System.Drawing.Size(25, 28);
             this.label7.TabIndex = 8;
             this.label7.Text = "G";
             // 
@@ -190,10 +181,9 @@
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(617, 428);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Location = new System.Drawing.Point(463, 348);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(32, 36);
+            this.label8.Size = new System.Drawing.Size(25, 28);
             this.label8.TabIndex = 9;
             this.label8.Text = "H";
             // 
@@ -203,10 +193,9 @@
             this.label10.BackColor = System.Drawing.Color.Transparent;
             this.label10.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(621, 471);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Location = new System.Drawing.Point(466, 383);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(24, 36);
+            this.label10.Size = new System.Drawing.Size(19, 28);
             this.label10.TabIndex = 10;
             this.label10.Text = "I";
             // 
@@ -216,10 +205,9 @@
             this.label11.BackColor = System.Drawing.Color.Transparent;
             this.label11.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(621, 514);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Location = new System.Drawing.Point(466, 418);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(24, 36);
+            this.label11.Size = new System.Drawing.Size(19, 28);
             this.label11.TabIndex = 11;
             this.label11.Text = "J";
             // 
@@ -229,10 +217,9 @@
             this.label9.BackColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(557, 558);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Location = new System.Drawing.Point(418, 453);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(41, 36);
+            this.label9.Size = new System.Drawing.Size(33, 28);
             this.label9.TabIndex = 21;
             this.label9.Text = "10";
             // 
@@ -242,10 +229,9 @@
             this.label12.BackColor = System.Drawing.Color.Transparent;
             this.label12.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.White;
-            this.label12.Location = new System.Drawing.Point(516, 558);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Location = new System.Drawing.Point(387, 453);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(30, 36);
+            this.label12.Size = new System.Drawing.Size(24, 28);
             this.label12.TabIndex = 20;
             this.label12.Text = "9";
             // 
@@ -255,10 +241,9 @@
             this.label13.BackColor = System.Drawing.Color.Transparent;
             this.label13.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.White;
-            this.label13.Location = new System.Drawing.Point(328, 558);
-            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Location = new System.Drawing.Point(246, 453);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(30, 36);
+            this.label13.Size = new System.Drawing.Size(24, 28);
             this.label13.TabIndex = 19;
             this.label13.Text = "5";
             // 
@@ -268,10 +253,9 @@
             this.label14.BackColor = System.Drawing.Color.Transparent;
             this.label14.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.Color.White;
-            this.label14.Location = new System.Drawing.Point(281, 558);
-            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label14.Location = new System.Drawing.Point(211, 453);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(30, 36);
+            this.label14.Size = new System.Drawing.Size(24, 28);
             this.label14.TabIndex = 18;
             this.label14.Text = "4";
             // 
@@ -281,10 +265,9 @@
             this.label15.BackColor = System.Drawing.Color.Transparent;
             this.label15.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(188, 558);
-            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label15.Location = new System.Drawing.Point(141, 453);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(30, 36);
+            this.label15.Size = new System.Drawing.Size(24, 28);
             this.label15.TabIndex = 17;
             this.label15.Text = "2";
             // 
@@ -294,10 +277,9 @@
             this.label16.BackColor = System.Drawing.Color.Transparent;
             this.label16.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.ForeColor = System.Drawing.Color.White;
-            this.label16.Location = new System.Drawing.Point(379, 558);
-            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label16.Location = new System.Drawing.Point(284, 453);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(30, 36);
+            this.label16.Size = new System.Drawing.Size(24, 28);
             this.label16.TabIndex = 16;
             this.label16.Text = "6";
             // 
@@ -307,10 +289,9 @@
             this.label17.BackColor = System.Drawing.Color.Transparent;
             this.label17.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label17.ForeColor = System.Drawing.Color.White;
-            this.label17.Location = new System.Drawing.Point(233, 558);
-            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label17.Location = new System.Drawing.Point(175, 453);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(30, 36);
+            this.label17.Size = new System.Drawing.Size(24, 28);
             this.label17.TabIndex = 15;
             this.label17.Text = "3";
             // 
@@ -320,10 +301,9 @@
             this.label18.BackColor = System.Drawing.Color.Transparent;
             this.label18.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label18.ForeColor = System.Drawing.Color.White;
-            this.label18.Location = new System.Drawing.Point(471, 558);
-            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label18.Location = new System.Drawing.Point(353, 453);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(30, 36);
+            this.label18.Size = new System.Drawing.Size(24, 28);
             this.label18.TabIndex = 14;
             this.label18.Text = "8";
             // 
@@ -333,10 +313,9 @@
             this.label19.BackColor = System.Drawing.Color.Transparent;
             this.label19.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label19.ForeColor = System.Drawing.Color.White;
-            this.label19.Location = new System.Drawing.Point(424, 558);
-            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label19.Location = new System.Drawing.Point(318, 453);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(30, 36);
+            this.label19.Size = new System.Drawing.Size(24, 28);
             this.label19.TabIndex = 13;
             this.label19.Text = "7";
             // 
@@ -346,10 +325,9 @@
             this.label20.BackColor = System.Drawing.Color.Transparent;
             this.label20.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label20.ForeColor = System.Drawing.Color.White;
-            this.label20.Location = new System.Drawing.Point(141, 558);
-            this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label20.Location = new System.Drawing.Point(106, 453);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(26, 36);
+            this.label20.Size = new System.Drawing.Size(21, 28);
             this.label20.TabIndex = 12;
             this.label20.Text = "1";
             // 
@@ -359,10 +337,9 @@
             this.label21.BackColor = System.Drawing.Color.Transparent;
             this.label21.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.ForeColor = System.Drawing.Color.White;
-            this.label21.Location = new System.Drawing.Point(1087, 558);
-            this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label21.Location = new System.Drawing.Point(815, 453);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(41, 36);
+            this.label21.Size = new System.Drawing.Size(33, 28);
             this.label21.TabIndex = 31;
             this.label21.Text = "10";
             // 
@@ -372,10 +349,9 @@
             this.label22.BackColor = System.Drawing.Color.Transparent;
             this.label22.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label22.ForeColor = System.Drawing.Color.White;
-            this.label22.Location = new System.Drawing.Point(1045, 558);
-            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label22.Location = new System.Drawing.Point(784, 453);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(30, 36);
+            this.label22.Size = new System.Drawing.Size(24, 28);
             this.label22.TabIndex = 30;
             this.label22.Text = "9";
             // 
@@ -385,10 +361,9 @@
             this.label23.BackColor = System.Drawing.Color.Transparent;
             this.label23.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label23.ForeColor = System.Drawing.Color.White;
-            this.label23.Location = new System.Drawing.Point(857, 558);
-            this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label23.Location = new System.Drawing.Point(643, 453);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(30, 36);
+            this.label23.Size = new System.Drawing.Size(24, 28);
             this.label23.TabIndex = 29;
             this.label23.Text = "5";
             // 
@@ -398,10 +373,9 @@
             this.label24.BackColor = System.Drawing.Color.Transparent;
             this.label24.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label24.ForeColor = System.Drawing.Color.White;
-            this.label24.Location = new System.Drawing.Point(811, 558);
-            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label24.Location = new System.Drawing.Point(608, 453);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(30, 36);
+            this.label24.Size = new System.Drawing.Size(24, 28);
             this.label24.TabIndex = 28;
             this.label24.Text = "4";
             // 
@@ -411,10 +385,9 @@
             this.label25.BackColor = System.Drawing.Color.Transparent;
             this.label25.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label25.ForeColor = System.Drawing.Color.White;
-            this.label25.Location = new System.Drawing.Point(719, 558);
-            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label25.Location = new System.Drawing.Point(539, 453);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(30, 36);
+            this.label25.Size = new System.Drawing.Size(24, 28);
             this.label25.TabIndex = 27;
             this.label25.Text = "2";
             // 
@@ -424,10 +397,9 @@
             this.label26.BackColor = System.Drawing.Color.Transparent;
             this.label26.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label26.ForeColor = System.Drawing.Color.White;
-            this.label26.Location = new System.Drawing.Point(908, 558);
-            this.label26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label26.Location = new System.Drawing.Point(681, 453);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(30, 36);
+            this.label26.Size = new System.Drawing.Size(24, 28);
             this.label26.TabIndex = 26;
             this.label26.Text = "6";
             // 
@@ -437,10 +409,9 @@
             this.label27.BackColor = System.Drawing.Color.Transparent;
             this.label27.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label27.ForeColor = System.Drawing.Color.White;
-            this.label27.Location = new System.Drawing.Point(764, 558);
-            this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label27.Location = new System.Drawing.Point(573, 453);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(30, 36);
+            this.label27.Size = new System.Drawing.Size(24, 28);
             this.label27.TabIndex = 25;
             this.label27.Text = "3";
             // 
@@ -450,10 +421,9 @@
             this.label28.BackColor = System.Drawing.Color.Transparent;
             this.label28.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label28.ForeColor = System.Drawing.Color.White;
-            this.label28.Location = new System.Drawing.Point(1000, 558);
-            this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label28.Location = new System.Drawing.Point(750, 453);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(30, 36);
+            this.label28.Size = new System.Drawing.Size(24, 28);
             this.label28.TabIndex = 24;
             this.label28.Text = "8";
             // 
@@ -463,10 +433,9 @@
             this.label29.BackColor = System.Drawing.Color.Transparent;
             this.label29.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label29.ForeColor = System.Drawing.Color.White;
-            this.label29.Location = new System.Drawing.Point(953, 558);
-            this.label29.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label29.Location = new System.Drawing.Point(715, 453);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(30, 36);
+            this.label29.Size = new System.Drawing.Size(24, 28);
             this.label29.TabIndex = 23;
             this.label29.Text = "7";
             // 
@@ -476,10 +445,9 @@
             this.label30.BackColor = System.Drawing.Color.Transparent;
             this.label30.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label30.ForeColor = System.Drawing.Color.White;
-            this.label30.Location = new System.Drawing.Point(672, 558);
-            this.label30.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label30.Location = new System.Drawing.Point(504, 453);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(26, 36);
+            this.label30.Size = new System.Drawing.Size(21, 28);
             this.label30.TabIndex = 22;
             this.label30.Text = "1";
             // 
@@ -489,10 +457,9 @@
             this.label31.BackColor = System.Drawing.Color.Transparent;
             this.label31.Font = new System.Drawing.Font("Bernard MT Condensed", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label31.ForeColor = System.Drawing.Color.White;
-            this.label31.Location = new System.Drawing.Point(203, 49);
-            this.label31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label31.Location = new System.Drawing.Point(152, 40);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(312, 72);
+            this.label31.Size = new System.Drawing.Size(251, 57);
             this.label31.TabIndex = 32;
             this.label31.Text = "Mes bateaux";
             // 
@@ -502,10 +469,9 @@
             this.label32.BackColor = System.Drawing.Color.Transparent;
             this.label32.Font = new System.Drawing.Font("Bernard MT Condensed", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label32.ForeColor = System.Drawing.Color.White;
-            this.label32.Location = new System.Drawing.Point(739, 49);
-            this.label32.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label32.Location = new System.Drawing.Point(554, 40);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(300, 72);
+            this.label32.Size = new System.Drawing.Size(241, 57);
             this.label32.TabIndex = 33;
             this.label32.Text = "Ses bateaux";
             // 
@@ -514,10 +480,9 @@
             this.BTN_NewGame.BackColor = System.Drawing.Color.Transparent;
             this.BTN_NewGame.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_NewGame.ForeColor = System.Drawing.Color.White;
-            this.BTN_NewGame.Location = new System.Drawing.Point(16, 15);
-            this.BTN_NewGame.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BTN_NewGame.Location = new System.Drawing.Point(12, 12);
             this.BTN_NewGame.Name = "BTN_NewGame";
-            this.BTN_NewGame.Size = new System.Drawing.Size(115, 80);
+            this.BTN_NewGame.Size = new System.Drawing.Size(86, 65);
             this.BTN_NewGame.TabIndex = 34;
             this.BTN_NewGame.Text = "Nouvelle Partie";
             this.BTN_NewGame.UseVisualStyleBackColor = false;
@@ -530,10 +495,9 @@
             this.BTN_Quit.BackColor = System.Drawing.Color.Transparent;
             this.BTN_Quit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_Quit.ForeColor = System.Drawing.Color.White;
-            this.BTN_Quit.Location = new System.Drawing.Point(1137, 15);
-            this.BTN_Quit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BTN_Quit.Location = new System.Drawing.Point(853, 12);
             this.BTN_Quit.Name = "BTN_Quit";
-            this.BTN_Quit.Size = new System.Drawing.Size(115, 80);
+            this.BTN_Quit.Size = new System.Drawing.Size(86, 65);
             this.BTN_Quit.TabIndex = 35;
             this.BTN_Quit.Text = "Quitter La Partie";
             this.BTN_Quit.UseVisualStyleBackColor = false;
@@ -541,25 +505,15 @@
             this.BTN_Quit.MouseEnter += new System.EventHandler(this.BTN_Quit_MouseEnter);
             this.BTN_Quit.MouseLeave += new System.EventHandler(this.BTN_Quit_MouseLeave);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(600, 26);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 28);
-            this.button1.TabIndex = 46;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // LB_E_1
             // 
             this.LB_E_1.BackColor = System.Drawing.Color.PaleGreen;
             this.LB_E_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LB_E_1.Font = new System.Drawing.Font("Bernard MT Condensed", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LB_E_1.Location = new System.Drawing.Point(1139, 164);
+            this.LB_E_1.Location = new System.Drawing.Point(854, 133);
+            this.LB_E_1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LB_E_1.Name = "LB_E_1";
-            this.LB_E_1.Size = new System.Drawing.Size(125, 62);
+            this.LB_E_1.Size = new System.Drawing.Size(94, 51);
             this.LB_E_1.TabIndex = 47;
             this.LB_E_1.Text = "Battleship";
             this.LB_E_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -569,9 +523,10 @@
             this.LB_E_2.BackColor = System.Drawing.Color.PaleGreen;
             this.LB_E_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LB_E_2.Font = new System.Drawing.Font("Bernard MT Condensed", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LB_E_2.Location = new System.Drawing.Point(1139, 234);
+            this.LB_E_2.Location = new System.Drawing.Point(854, 190);
+            this.LB_E_2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LB_E_2.Name = "LB_E_2";
-            this.LB_E_2.Size = new System.Drawing.Size(125, 62);
+            this.LB_E_2.Size = new System.Drawing.Size(94, 51);
             this.LB_E_2.TabIndex = 48;
             this.LB_E_2.Text = "Destroyer";
             this.LB_E_2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -581,9 +536,10 @@
             this.LB_E_3.BackColor = System.Drawing.Color.PaleGreen;
             this.LB_E_3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LB_E_3.Font = new System.Drawing.Font("Bernard MT Condensed", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LB_E_3.Location = new System.Drawing.Point(1139, 304);
+            this.LB_E_3.Location = new System.Drawing.Point(854, 247);
+            this.LB_E_3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LB_E_3.Name = "LB_E_3";
-            this.LB_E_3.Size = new System.Drawing.Size(125, 62);
+            this.LB_E_3.Size = new System.Drawing.Size(94, 51);
             this.LB_E_3.TabIndex = 49;
             this.LB_E_3.Text = "AircraftCarrier";
             this.LB_E_3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -593,9 +549,10 @@
             this.LB_E_4.BackColor = System.Drawing.Color.PaleGreen;
             this.LB_E_4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LB_E_4.Font = new System.Drawing.Font("Bernard MT Condensed", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LB_E_4.Location = new System.Drawing.Point(1139, 374);
+            this.LB_E_4.Location = new System.Drawing.Point(854, 304);
+            this.LB_E_4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LB_E_4.Name = "LB_E_4";
-            this.LB_E_4.Size = new System.Drawing.Size(125, 62);
+            this.LB_E_4.Size = new System.Drawing.Size(94, 51);
             this.LB_E_4.TabIndex = 50;
             this.LB_E_4.Text = "Submarine";
             this.LB_E_4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -605,9 +562,10 @@
             this.LB_E_5.BackColor = System.Drawing.Color.PaleGreen;
             this.LB_E_5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LB_E_5.Font = new System.Drawing.Font("Bernard MT Condensed", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LB_E_5.Location = new System.Drawing.Point(1139, 444);
+            this.LB_E_5.Location = new System.Drawing.Point(854, 361);
+            this.LB_E_5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LB_E_5.Name = "LB_E_5";
-            this.LB_E_5.Size = new System.Drawing.Size(125, 62);
+            this.LB_E_5.Size = new System.Drawing.Size(94, 51);
             this.LB_E_5.TabIndex = 51;
             this.LB_E_5.Text = "PatrolBoat";
             this.LB_E_5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -617,9 +575,10 @@
             this.LB_A_5.BackColor = System.Drawing.Color.PaleGreen;
             this.LB_A_5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LB_A_5.Font = new System.Drawing.Font("Bernard MT Condensed", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LB_A_5.Location = new System.Drawing.Point(5, 444);
+            this.LB_A_5.Location = new System.Drawing.Point(4, 361);
+            this.LB_A_5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LB_A_5.Name = "LB_A_5";
-            this.LB_A_5.Size = new System.Drawing.Size(125, 62);
+            this.LB_A_5.Size = new System.Drawing.Size(94, 51);
             this.LB_A_5.TabIndex = 56;
             this.LB_A_5.Text = "PatrolBoat";
             this.LB_A_5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -629,9 +588,10 @@
             this.LB_A_4.BackColor = System.Drawing.Color.PaleGreen;
             this.LB_A_4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LB_A_4.Font = new System.Drawing.Font("Bernard MT Condensed", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LB_A_4.Location = new System.Drawing.Point(5, 374);
+            this.LB_A_4.Location = new System.Drawing.Point(4, 304);
+            this.LB_A_4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LB_A_4.Name = "LB_A_4";
-            this.LB_A_4.Size = new System.Drawing.Size(125, 62);
+            this.LB_A_4.Size = new System.Drawing.Size(94, 51);
             this.LB_A_4.TabIndex = 55;
             this.LB_A_4.Text = "Submarine";
             this.LB_A_4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -641,9 +601,10 @@
             this.LB_A_3.BackColor = System.Drawing.Color.PaleGreen;
             this.LB_A_3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LB_A_3.Font = new System.Drawing.Font("Bernard MT Condensed", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LB_A_3.Location = new System.Drawing.Point(5, 304);
+            this.LB_A_3.Location = new System.Drawing.Point(4, 247);
+            this.LB_A_3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LB_A_3.Name = "LB_A_3";
-            this.LB_A_3.Size = new System.Drawing.Size(125, 62);
+            this.LB_A_3.Size = new System.Drawing.Size(94, 51);
             this.LB_A_3.TabIndex = 54;
             this.LB_A_3.Text = "AircraftCarrier";
             this.LB_A_3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -653,9 +614,10 @@
             this.LB_A_2.BackColor = System.Drawing.Color.PaleGreen;
             this.LB_A_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LB_A_2.Font = new System.Drawing.Font("Bernard MT Condensed", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LB_A_2.Location = new System.Drawing.Point(5, 234);
+            this.LB_A_2.Location = new System.Drawing.Point(4, 190);
+            this.LB_A_2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LB_A_2.Name = "LB_A_2";
-            this.LB_A_2.Size = new System.Drawing.Size(125, 62);
+            this.LB_A_2.Size = new System.Drawing.Size(94, 51);
             this.LB_A_2.TabIndex = 53;
             this.LB_A_2.Text = "Destroyer";
             this.LB_A_2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -665,20 +627,33 @@
             this.LB_A_1.BackColor = System.Drawing.Color.PaleGreen;
             this.LB_A_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LB_A_1.Font = new System.Drawing.Font("Bernard MT Condensed", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LB_A_1.Location = new System.Drawing.Point(5, 164);
+            this.LB_A_1.Location = new System.Drawing.Point(4, 133);
+            this.LB_A_1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LB_A_1.Name = "LB_A_1";
-            this.LB_A_1.Size = new System.Drawing.Size(125, 62);
+            this.LB_A_1.Size = new System.Drawing.Size(94, 51);
             this.LB_A_1.TabIndex = 52;
             this.LB_A_1.Text = "Battleship";
             this.LB_A_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // LB_Tour
+            // 
+            this.LB_Tour.BackColor = System.Drawing.Color.Transparent;
+            this.LB_Tour.Font = new System.Drawing.Font("Bernard MT Condensed", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LB_Tour.ForeColor = System.Drawing.Color.Gold;
+            this.LB_Tour.Location = new System.Drawing.Point(4, 9);
+            this.LB_Tour.Name = "LB_Tour";
+            this.LB_Tour.Size = new System.Drawing.Size(944, 41);
+            this.LB_Tour.TabIndex = 57;
+            this.LB_Tour.Text = "Votre Tour";
+            this.LB_Tour.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // PlancheJeu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Battleship.Properties.Resources.Dark_water_wallpaper_2560x1600;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1268, 598);
+            this.ClientSize = new System.Drawing.Size(951, 486);
             this.Controls.Add(this.LB_A_5);
             this.Controls.Add(this.LB_A_4);
             this.Controls.Add(this.LB_A_3);
@@ -689,7 +664,6 @@
             this.Controls.Add(this.LB_E_3);
             this.Controls.Add(this.LB_E_2);
             this.Controls.Add(this.LB_E_1);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.BTN_Quit);
             this.Controls.Add(this.BTN_NewGame);
             this.Controls.Add(this.label32);
@@ -726,8 +700,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.PN_Ennemi);
             this.Controls.Add(this.PN_Joueur);
+            this.Controls.Add(this.LB_Tour);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "PlancheJeu";
             this.Text = "PlancheJeu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PlancheJeu_FormClosing);
@@ -775,7 +749,6 @@
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Button BTN_NewGame;
         private System.Windows.Forms.Button BTN_Quit;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label LB_E_1;
         private System.Windows.Forms.Label LB_E_2;
         private System.Windows.Forms.Label LB_E_3;
@@ -786,6 +759,7 @@
         private System.Windows.Forms.Label LB_A_3;
         private System.Windows.Forms.Label LB_A_2;
         private System.Windows.Forms.Label LB_A_1;
+        private System.Windows.Forms.Label LB_Tour;
 
     }
 }

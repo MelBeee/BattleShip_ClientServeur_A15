@@ -37,7 +37,33 @@ namespace Battleship
         {
             LoadPlan(PN_Ennemi, "_E");
             LoadPlan(PN_Joueur, "_A");
+            LoadMesBateaux();
+            DeterminerLeTour();
+        }
 
+        private void DeterminerLeTour()
+        {
+            string reponse = "";
+            if (netStream.CanRead)
+            {
+                byte[] bytes = new byte[unClient.ReceiveBufferSize];
+
+                netStream.Read(bytes, 0, (int)unClient.ReceiveBufferSize);
+
+                reponse = Encoding.UTF8.GetString(bytes);
+            }
+
+            if(reponse == "StartTour")
+            {
+                LB_Tour.Text = "C'est à vous !";
+                PN_Joueur.Enabled = true;
+            }
+            else
+            {
+                LB_Tour.Text = "";
+                PN_Joueur.Enabled = false;
+            }
+            this.Refresh();
         }
 
         private void SetLesTrucs(int index, char lettre, int nombre, bool etat, Position[] tab)
@@ -227,6 +253,7 @@ namespace Battleship
 
                 reponse = Encoding.UTF8.GetString(bytes);
             }
+
             if (reponse == "Perdu" || reponse == "Gagné")
             {
                 AfficherMessageFin(reponse);
@@ -270,7 +297,7 @@ namespace Battleship
         {
             switch (nom)
             {
-                case "Battleship":
+                case "BattleShip":
                     LB_E_1.BackColor = Color.FromArgb(255, 128, 128);
                     break;
                 case "PatrolBoat":
@@ -391,11 +418,6 @@ namespace Battleship
             BTN_Quit.BackColor = Color.Transparent;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            LoadMesBateaux();
-        }
-
         private void PlancheJeu_FormClosing(object sender, FormClosingEventArgs e)
         {
             FermerForm();
@@ -405,14 +427,14 @@ namespace Battleship
         {
             if (MessageBox.Show("Etes vous sur de vouloir quitter la partie en cours ? ", "Attention !", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
             {
-                this.Close();
                 if (netStream.CanWrite)
                 {
                     Byte[] sendBytes = Encoding.UTF8.GetBytes("Disconnected");
                     netStream.Write(sendBytes, 0, sendBytes.Length);
-                    netStream.Close();
-                    unClient.Close();
+                    //netStream.Close();
+                    //unClient.Close();
                 }
+                this.Close();
             }
         }
 
