@@ -57,12 +57,13 @@ namespace Battleship
 
         private void Choisir_Position_Load(object sender, EventArgs e)
         {
-            BTN_Start.Enabled = false;
+            BTN_Start.Enabled = true;
         }
 
         private void BTN_Start_Click(object sender, EventArgs e)
         {
-            StringACharlie = BattleShip + PatrolBoat + Destroyer + Submarine + AircraftCarrier;
+           // StringACharlie = BattleShip + PatrolBoat + Destroyer + Submarine + AircraftCarrier;
+            StringACharlie = "BattleShip:B0-B1-B2-B3-B4/PatrolBoat:E0-E1/Destroyer:C0-C1-C2-C3/Submarine:D0-D1-D2/AircraftCarrier:A0-A1-A2/";
             if (netStream.CanWrite)
             {
                 Byte[] sendBytes = Encoding.UTF8.GetBytes(StringACharlie);

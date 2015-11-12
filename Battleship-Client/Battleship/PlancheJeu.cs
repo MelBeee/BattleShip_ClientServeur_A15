@@ -22,6 +22,7 @@ namespace Battleship
 
         TcpClient unClient;
         NetworkStream netStream;
+        ThreadJeu unThreadJeu;
 
         public PlancheJeu(/*Flotte uneFlotte,*/ TcpClient client)
         {
@@ -38,7 +39,6 @@ namespace Battleship
             LoadPlan(PN_Ennemi, "_E");
             LoadPlan(PN_Joueur, "_A");
             LoadMesBateaux();
-            DeterminerLeTour();
         }
 
         private void DeterminerLeTour()
@@ -53,7 +53,7 @@ namespace Battleship
                 reponse = Encoding.UTF8.GetString(bytes);
             }
 
-            if(reponse == "StartTour")
+            if (reponse.Substring(0, 9) == "StartTour")
             {
                 LB_Tour.Text = "C'est à vous !";
                 PN_Joueur.Enabled = true;
@@ -62,6 +62,11 @@ namespace Battleship
             {
                 LB_Tour.Text = "";
                 PN_Joueur.Enabled = false;
+
+                unThreadJeu = new ThreadJeu(unClient, netStream);
+                Thread unThread = new Thread(new ThreadStart(unThreadJeu.Demarrer));
+                unThread.Start();
+                RecevoirTouche(unThreadJeu.GetPosition());
             }
             this.Refresh();
         }
@@ -168,7 +173,7 @@ namespace Battleship
                     unBouton.BackgroundImageLayout = ImageLayout.Stretch;
                     unBouton.Parent = unPanel;
                     unBouton.Location = new Point(i * 35, y * 35);
-                    unBouton.Name = "BTN_" + LetterArray[y].ToString() + (i + 1).ToString() + unString;
+                    unBouton.Name = "BTN_" + LetterArray[y].ToString() + (i).ToString() + unString;
                     unBouton.Click += new EventHandler(this.BTN_uneAction_Click);
 
                     if (unPanel == PN_Joueur)
@@ -198,6 +203,14 @@ namespace Battleship
             {
                 CreatePanelOverButton(PN_Ennemi, name, Battleship.Properties.Resources.WaterExplosion, sender);
             }
+
+            PN_Joueur.Enabled = false;
+            this.Refresh();
+            unThreadJeu = new ThreadJeu(unClient, netStream);
+            Thread unThread = new Thread(new ThreadStart(unThreadJeu.Demarrer));
+            unThread.Start();
+            RecevoirTouche(unThreadJeu.GetPosition());
+            this.Refresh();
         }
 
         private void CreatePanelOverButton(Panel unPanel, string name, Bitmap Image, object sender)
@@ -223,16 +236,6 @@ namespace Battleship
             }
         }
 
-        private void ThreadJeu()
-        {
-            bool partifini = false;
-
-            while (!partifini) // PERDU GAGNER LUI OU MOI QUIT
-            {
-                partifini = RecevoirTouche();
-            }
-        }
-
         private bool VerifierTouche(string name)
         {
             bool touche = false;
@@ -254,29 +257,23 @@ namespace Battleship
                 reponse = Encoding.UTF8.GetString(bytes);
             }
 
-            if (reponse == "Perdu" || reponse == "Gagné")
+
+            int index = reponse.IndexOf('/');
+            int indexb = reponse.IndexOf('\0');
+            string avant = reponse.Substring(0, index);
+            string apres = reponse.Substring(index + 1, indexb - index - 1);
+            if (index > 0)
             {
-                AfficherMessageFin(reponse);
-            }
-            else
-            {
-                int index = reponse.IndexOf('/');
-                if (index > 0)
+                if (avant == "true")
                 {
-                    if (reponse.Substring(0, index) == "true")
-                    {
-                        touche = true;
-                    }
+                    touche = true;
+                }
 
-                    if (reponse.Substring(index + 1, reponse.Length) != "aucun")
-                    {
-                        string bateaudetruit = reponse.Substring(index + 1, reponse.Length);
-
-                        AnalyseBateau(bateaudetruit);
-                    }
+                if (apres != "aucun")
+                {
+                    AnalyseBateau(apres);
                 }
             }
-
 
             return touche;
         }
@@ -315,10 +312,9 @@ namespace Battleship
             }
         }
 
-        private bool RecevoirTouche()
+        private void RecevoirTouche(string Position)
         {
             string reponse = "";
-            bool fini = false;
 
             if (netStream.CanRead)
             {
@@ -331,7 +327,7 @@ namespace Battleship
             if (reponse == "Perdu" || reponse == "Gagné")
             {
                 AfficherMessageFin(reponse);
-                fini = true;
+                this.Close();
             }
             else
             {
@@ -340,17 +336,14 @@ namespace Battleship
                     AnalyseTouche(reponse);
                 }
             }
-
-            PN_Joueur.Enabled = true;
-
-            return fini;
         }
 
         private void AnalyseTouche(string touche)
         {
+            touche = touche.Substring(0, 2);
             Button btn = this.Controls.Find("BTN_" + touche + "_A", true).FirstOrDefault() as Button;
 
-            if(VerifierFlotte(touche))
+            if (VerifierFlotte(touche))
             {
                 CreatePanelOverButton(PN_Joueur, touche, Battleship.Properties.Resources.Explosion_Fire, btn);
             }
@@ -427,15 +420,13 @@ namespace Battleship
         {
             if (MessageBox.Show("Etes vous sur de vouloir quitter la partie en cours ? ", "Attention !", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
             {
-                if (netStream.CanWrite)
-                {
-                    Byte[] sendBytes = Encoding.UTF8.GetBytes("Disconnected");
-                    netStream.Write(sendBytes, 0, sendBytes.Length);
-                    //netStream.Close();
-                    //unClient.Close();
-                }
                 this.Close();
             }
+        }
+
+        private void PlancheJeu_Shown(object sender, EventArgs e)
+        {
+            DeterminerLeTour();
         }
 
 

@@ -706,6 +706,7 @@
             this.Text = "PlancheJeu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PlancheJeu_FormClosing);
             this.Load += new System.EventHandler(this.PlancheJeu_Load);
+            this.Shown += new System.EventHandler(this.PlancheJeu_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
