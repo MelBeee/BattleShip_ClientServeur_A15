@@ -19,7 +19,7 @@ namespace Battleship
         int[] NumberArray = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
         Flotte maFlotte;
-    
+
         TcpClient unClient;
         NetworkStream netStream;
 
@@ -37,7 +37,7 @@ namespace Battleship
         {
             LoadPlan(PN_Ennemi, "_E");
             LoadPlan(PN_Joueur, "_A");
-            
+
         }
 
         private void SetLesTrucs(int index, char lettre, int nombre, bool etat, Position[] tab)
@@ -191,7 +191,7 @@ namespace Battleship
                 unPB.BringToFront();
                 unPB.BackColor = Color.Transparent;
             }
-            catch(Exception ext)
+            catch (Exception ext)
             {
                 MessageBox.Show(ext.ToString());
             }
@@ -199,7 +199,12 @@ namespace Battleship
 
         private void ThreadJeu()
         {
-            // Attendre le mouvement de l'autre joueur 
+            bool partifini = false;
+
+            while (!partifini) // PERDU GAGNER LUI OU MOI QUIT
+            {
+                partifini = RecevoirTouche();
+            }
         }
 
         private bool VerifierTouche(string name)
@@ -211,9 +216,10 @@ namespace Battleship
             {
                 Byte[] sendBytes = Encoding.UTF8.GetBytes(name);
                 netStream.Write(sendBytes, 0, sendBytes.Length);
+                PN_Joueur.Enabled = false;
             }
 
-            if(netStream.CanRead)
+            if (netStream.CanRead)
             {
                 byte[] bytes = new byte[unClient.ReceiveBufferSize];
 
@@ -221,29 +227,48 @@ namespace Battleship
 
                 reponse = Encoding.UTF8.GetString(bytes);
             }
-
-            int index = reponse.IndexOf('/');
-            if(index > 0)
+            if (reponse == "Perdu" || reponse == "Gagné")
             {
-                if(reponse.Substring(0, index) == "true")
+                AfficherMessageFin(reponse);
+            }
+            else
+            {
+                int index = reponse.IndexOf('/');
+                if (index > 0)
                 {
-                    touche = true;
-                }
-                
-                if(reponse.Substring(index+1, reponse.Length) != "aucun")
-                {
-                    string bateaudetruit = reponse.Substring(index + 1, reponse.Length);
+                    if (reponse.Substring(0, index) == "true")
+                    {
+                        touche = true;
+                    }
 
-                    AnalyseBateau(bateaudetruit);
+                    if (reponse.Substring(index + 1, reponse.Length) != "aucun")
+                    {
+                        string bateaudetruit = reponse.Substring(index + 1, reponse.Length);
+
+                        AnalyseBateau(bateaudetruit);
+                    }
                 }
             }
+
 
             return touche;
         }
 
+        private void AfficherMessageFin(string resultat)
+        {
+            if (resultat == "Perdu")
+            {
+                MessageBox.Show("DÉSOLÉ, VOUS AVEZ PERDU !!");
+            }
+            else if (resultat == "Gagné")
+            {
+                MessageBox.Show("FÉLICITATION, VOUS AVEZ GAGNÉ !!");
+            }
+        }
+
         private void AnalyseBateau(string nom)
         {
-            switch(nom)
+            switch (nom)
             {
                 case "Battleship":
                     LB_E_1.BackColor = Color.FromArgb(255, 128, 128);
@@ -265,8 +290,8 @@ namespace Battleship
 
         private bool RecevoirTouche()
         {
-            bool touche = false;
             string reponse = "";
+            bool fini = false;
 
             if (netStream.CanRead)
             {
@@ -276,21 +301,36 @@ namespace Battleship
 
                 reponse = Encoding.UTF8.GetString(bytes);
             }
-
-            if(reponse != "")
+            if (reponse == "Perdu" || reponse == "Gagné")
             {
-                AnalyseTouche(reponse);
+                AfficherMessageFin(reponse);
+                fini = true;
+            }
+            else
+            {
+                if (reponse != "")
+                {
+                    AnalyseTouche(reponse);
+                }
             }
 
-            return touche;
+            PN_Joueur.Enabled = true;
+
+            return fini;
         }
 
         private void AnalyseTouche(string touche)
         {
             Button btn = this.Controls.Find("BTN_" + touche + "_A", true).FirstOrDefault() as Button;
 
-            VerifierFlotte(touche);
-            CreatePanelOverButton(PN_Joueur, touche, Battleship.Properties.Resources.Explosion_Fire, btn);
+            if(VerifierFlotte(touche))
+            {
+                CreatePanelOverButton(PN_Joueur, touche, Battleship.Properties.Resources.Explosion_Fire, btn);
+            }
+            else
+            {
+                CreatePanelOverButton(PN_Joueur, touche, Battleship.Properties.Resources.WaterExplosion, btn);
+            }
         }
 
         private bool VerifierFlotte(string touche)
@@ -366,7 +406,7 @@ namespace Battleship
             if (MessageBox.Show("Etes vous sur de vouloir quitter la partie en cours ? ", "Attention !", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
             {
                 this.Close();
-                if(netStream.CanWrite)
+                if (netStream.CanWrite)
                 {
                     Byte[] sendBytes = Encoding.UTF8.GetBytes("Disconnected");
                     netStream.Write(sendBytes, 0, sendBytes.Length);

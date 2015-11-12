@@ -56,7 +56,7 @@
             this.BTN_Start.Name = "BTN_Start";
             this.BTN_Start.Size = new System.Drawing.Size(207, 60);
             this.BTN_Start.TabIndex = 3;
-            this.BTN_Start.Text = "Start";
+            this.BTN_Start.Text = "Démarrer";
             this.BTN_Start.UseVisualStyleBackColor = false;
             this.BTN_Start.Click += new System.EventHandler(this.BTN_Start_Click);
             this.BTN_Start.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BTN_Start_MouseDown);
