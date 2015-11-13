@@ -62,7 +62,6 @@
             this.label30 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
-            this.BTN_NewGame = new System.Windows.Forms.Button();
             this.BTN_Quit = new System.Windows.Forms.Button();
             this.LB_E_1 = new System.Windows.Forms.Label();
             this.LB_E_2 = new System.Windows.Forms.Label();
@@ -75,6 +74,7 @@
             this.LB_A_2 = new System.Windows.Forms.Label();
             this.LB_A_1 = new System.Windows.Forms.Label();
             this.LB_Tour = new System.Windows.Forms.Label();
+            this.PN_Cache_2 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // PN_Joueur
@@ -475,21 +475,6 @@
             this.label32.TabIndex = 33;
             this.label32.Text = "Ses bateaux";
             // 
-            // BTN_NewGame
-            // 
-            this.BTN_NewGame.BackColor = System.Drawing.Color.Transparent;
-            this.BTN_NewGame.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_NewGame.ForeColor = System.Drawing.Color.White;
-            this.BTN_NewGame.Location = new System.Drawing.Point(12, 12);
-            this.BTN_NewGame.Name = "BTN_NewGame";
-            this.BTN_NewGame.Size = new System.Drawing.Size(86, 65);
-            this.BTN_NewGame.TabIndex = 34;
-            this.BTN_NewGame.Text = "Nouvelle Partie";
-            this.BTN_NewGame.UseVisualStyleBackColor = false;
-            this.BTN_NewGame.Click += new System.EventHandler(this.BTN_NewGame_Click);
-            this.BTN_NewGame.MouseEnter += new System.EventHandler(this.BTN_NewGame_MouseEnter);
-            this.BTN_NewGame.MouseLeave += new System.EventHandler(this.BTN_NewGame_MouseLeave);
-            // 
             // BTN_Quit
             // 
             this.BTN_Quit.BackColor = System.Drawing.Color.Transparent;
@@ -647,6 +632,15 @@
             this.LB_Tour.Text = "Votre Tour";
             this.LB_Tour.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // PN_Cache_2
+            // 
+            this.PN_Cache_2.BackColor = System.Drawing.Color.Transparent;
+            this.PN_Cache_2.Location = new System.Drawing.Point(499, 100);
+            this.PN_Cache_2.Name = "PN_Cache_2";
+            this.PN_Cache_2.Size = new System.Drawing.Size(350, 350);
+            this.PN_Cache_2.TabIndex = 58;
+            this.PN_Cache_2.Visible = false;
+            // 
             // PlancheJeu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -654,6 +648,8 @@
             this.BackgroundImage = global::Battleship.Properties.Resources.Dark_water_wallpaper_2560x1600;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(951, 486);
+            this.ControlBox = false;
+            this.Controls.Add(this.PN_Cache_2);
             this.Controls.Add(this.LB_A_5);
             this.Controls.Add(this.LB_A_4);
             this.Controls.Add(this.LB_A_3);
@@ -665,7 +661,6 @@
             this.Controls.Add(this.LB_E_2);
             this.Controls.Add(this.LB_E_1);
             this.Controls.Add(this.BTN_Quit);
-            this.Controls.Add(this.BTN_NewGame);
             this.Controls.Add(this.label32);
             this.Controls.Add(this.label31);
             this.Controls.Add(this.label21);
@@ -748,7 +743,6 @@
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.Button BTN_NewGame;
         private System.Windows.Forms.Button BTN_Quit;
         private System.Windows.Forms.Label LB_E_1;
         private System.Windows.Forms.Label LB_E_2;
@@ -760,7 +754,8 @@
         public System.Windows.Forms.Label LB_A_3;
         public System.Windows.Forms.Label LB_A_2;
         public System.Windows.Forms.Label LB_A_1;
-        private System.Windows.Forms.Label LB_Tour;
+        public System.Windows.Forms.Label LB_Tour;
+        public System.Windows.Forms.Panel PN_Cache_2;
 
     }
 }

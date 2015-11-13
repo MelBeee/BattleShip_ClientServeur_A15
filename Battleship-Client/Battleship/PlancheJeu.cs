@@ -24,7 +24,8 @@ namespace Battleship
         NetworkStream netStream;
         ThreadJeu unThreadJeu;
         string s_maFlotte;
-        bool commencer; 
+        bool commencer;
+        bool gagner = true; 
 
         public PlancheJeu(string flotte, TcpClient client)
         {
@@ -32,43 +33,14 @@ namespace Battleship
             unClient = client;
             netStream = unClient.GetStream();
             s_maFlotte = flotte;
-            InitializeFlotte();
         }
 
         private void PlancheJeu_Load(object sender, EventArgs e)
         {
+            InitializeFlotte();
             LoadPlan(PN_Ennemi, "_E");
             LoadPlan(PN_Joueur, "_A");
             LoadMesBateaux();
-        }
-
-        private void BoucleJeu()
-        {
-            string fini = "";
-
-            while (fini == "Perdu")
-            {
-                if (commencer)
-                {
-                    // mon tour
-                }
-                else
-                {
-                    // SonTour
-                }
-            }
-        }
-
-        private void JouerMonTour()
-        {
-            // ENABLED TRUE 
-        }
-
-        private void JouerSonTour()
-        {
-            // ENABLED FALSE 
-
-            // J'attend son attaque
         }
 
         private void DeterminerLeTour()
@@ -92,7 +64,6 @@ namespace Battleship
             else
             {
                 LB_Tour.Text = "";
-                PN_Joueur.Enabled = false;
                 commencer = false; 
 
                 unThreadJeu = new ThreadJeu(unClient, netStream, this, maFlotte);
@@ -116,18 +87,58 @@ namespace Battleship
             if (VerifierTouche(position))
             {
                 CreatePanelOverButton(PN_Ennemi, name, Battleship.Properties.Resources.Explosion_Fire, sender);
+                
             }
             else
             {
                 CreatePanelOverButton(PN_Ennemi, name, Battleship.Properties.Resources.WaterExplosion, sender);
+                
             }
 
-            PN_Joueur.Enabled = false;
+            LB_Tour.Text = "";
+
+            if(VerifierPartiFini())
+            {
+                gagner = false; 
+                this.Close();
+            }
 
             unThreadJeu = new ThreadJeu(unClient, netStream, this, maFlotte);
             Thread unThread = new Thread(new ThreadStart(unThreadJeu.Demarrer));
             unThread.Start();
             this.Refresh();
+        }
+
+        private bool VerifierPartiFini()
+        {
+            int cpt = 0;
+            if (LB_E_1.BackColor == Color.FromArgb(255, 128, 128))
+            {
+                cpt++;
+            }
+            if (LB_E_2.BackColor == Color.FromArgb(255, 128, 128))
+            {
+                cpt++;
+            }
+            if (LB_E_3.BackColor == Color.FromArgb(255, 128, 128))
+            {
+                cpt++;
+            }
+            if (LB_E_4.BackColor == Color.FromArgb(255, 128, 128))
+            {
+                cpt++;
+            }
+            if (LB_E_5.BackColor == Color.FromArgb(255, 128, 128))
+            {
+                cpt++;
+            }
+
+            if (cpt == 5)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private bool VerifierTouche(string name)
@@ -139,7 +150,6 @@ namespace Battleship
             {
                 Byte[] sendBytes = Encoding.UTF8.GetBytes(name);
                 netStream.Write(sendBytes, 0, sendBytes.Length);
-                PN_Joueur.Enabled = false;
             }
 
             if (netStream.CanRead)
@@ -149,6 +159,20 @@ namespace Battleship
                 netStream.Read(bytes, 0, (int)unClient.ReceiveBufferSize);
 
                 reponse = Encoding.UTF8.GetString(bytes);
+            }
+
+            string verifierfin = reponse.Substring(0, 5);
+            reponse = reponse.Replace(verifierfin + "/", "");
+
+            if(verifierfin == "Gagne")
+            {
+                gagner = true;
+                this.Close();
+            }
+            else if (verifierfin == "Perdu")
+            {
+                gagner = false;
+                this.Close();
             }
 
             int index = reponse.IndexOf('/');
@@ -194,23 +218,10 @@ namespace Battleship
             this.Refresh();
         }
 
-        private bool VerifierBateau(char lettre, int nombre, Bateau unBateau)
-        {
-            for (int i = 0; i < unBateau.Tab.Length; i++)
-            {
-                if (unBateau.Tab[i].letter == lettre && unBateau.Tab[i].number == nombre)
-                {
-                    unBateau.Tab[i].touche = true;
-                    return true;
-                }
-            }
-            return false;
-        }
-
         private string RemoveBoatName(string bateau)
         {
-            int index = bateau.IndexOf(':');
-            return bateau.Substring(index + 1, bateau.Length - index - 1);
+            int index = bateau.IndexOf(':');  
+            return bateau.Substring(index + 2, (bateau.Length - index) - 2);
         }
 
         private void RentrerDansTableau(string bateau, Position[] tableau)
@@ -248,11 +259,11 @@ namespace Battleship
 
         private void InitializeFlotte()
         {
-            string battleship = RemoveBoatName(s_maFlotte.Substring(0, 25));
-            string patrolboat = RemoveBoatName(s_maFlotte.Substring(26, 16));
-            string destroyer = RemoveBoatName(s_maFlotte.Substring(43, 21));
-            string submarine = RemoveBoatName(s_maFlotte.Substring(65, 18));
-            string aircraft = RemoveBoatName(s_maFlotte.Substring(84, 24));
+            string battleship = RemoveBoatName(s_maFlotte.Substring(0, 26));
+            string patrolboat = RemoveBoatName(s_maFlotte.Substring(27, 17));
+            string destroyer = RemoveBoatName(s_maFlotte.Substring(44, 23));
+            string submarine = RemoveBoatName(s_maFlotte.Substring(66, 21));
+            string aircraft = RemoveBoatName(s_maFlotte.Substring(85, 28));
 
             Position[] tabBattleShip = new Position[5];
             Position[] tabPatrol = new Position[2];
@@ -370,24 +381,6 @@ namespace Battleship
             FermerForm();
         }
 
-        private void BTN_NewGame_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Etes vous sur de vouloir quitter la partie en cours pour en recommencer une nouvelle ? ", "Attention !", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
-            {
-                this.Close();
-            }
-        }
-
-        private void BTN_NewGame_MouseEnter(object sender, EventArgs e)
-        {
-            BTN_NewGame.BackColor = Color.Gray;
-        }
-
-        private void BTN_NewGame_MouseLeave(object sender, EventArgs e)
-        {
-            BTN_NewGame.BackColor = Color.Transparent;
-        }
-
         private void BTN_Quit_MouseEnter(object sender, EventArgs e)
         {
             BTN_Quit.BackColor = Color.Gray;
@@ -398,9 +391,21 @@ namespace Battleship
             BTN_Quit.BackColor = Color.Transparent;
         }
 
+        bool fini = true; 
+
         private void PlancheJeu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            FermerForm();
+            if(fini)
+            {
+                if(!gagner)
+                {
+                    MessageBox.Show("La partie est terminé, vous avez gagné !");
+                }
+                else
+                {
+                    MessageBox.Show("La partie est terminé, vous avez perdu !");
+                }
+            }
         }
 
         private void FermerForm()
@@ -408,6 +413,7 @@ namespace Battleship
             if (MessageBox.Show("Etes vous sur de vouloir quitter la partie en cours ? ", "Attention !", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
             {
                 this.Close();
+                fini = false; 
             }
         }
 

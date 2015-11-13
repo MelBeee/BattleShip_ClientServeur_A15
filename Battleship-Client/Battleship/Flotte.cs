@@ -78,7 +78,6 @@ namespace Battleship
         private bool VerifierBateau(Bateau bateau, char lettre, int nombre)
         {
             bool touche = false;
-            bool detruit = true;
 
             for (int i = 0; i < bateau.Tab.Length; i++)
             {
@@ -87,27 +86,6 @@ namespace Battleship
                     touche = true;
                     bateau.Tab[i].touche = true;
                 }
-            }
-
-            for (int i = 0; i < bateau.Tab.Length || detruit; i++)
-            {
-                if(bateau.Tab[i].touche)
-                {
-                    detruit = true; 
-                }
-                else
-                {
-                    detruit = false;
-                }
-            }
-
-            if(detruit)
-            {
-                bateau.Detruit = true; 
-            }
-            else
-            {
-                bateau.Detruit = false;
             }
 
             return touche;

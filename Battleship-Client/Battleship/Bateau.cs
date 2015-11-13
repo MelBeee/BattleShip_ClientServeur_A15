@@ -40,16 +40,5 @@ namespace Battleship
             Tab = Tableau;
             nom = unnom;
         }
-
-        public void UpdateDetruit()
-        {
-            for(int i = 0; i < NbreCases || !Detruit ; i++)
-            {
-                if (Tab[i].touche)
-                    Detruit = true;
-                else
-                    Detruit = false;
-            }
-        }
     }
 }

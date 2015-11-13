@@ -28,6 +28,9 @@ namespace Battleship
 
         public void Demarrer()
         {
+            if (unForm.InvokeRequired)
+                unForm.Invoke(new MethodInvoker(delegate { unForm.PN_Cache_2.Visible = false; }));
+
             byte[] bytes = new byte[unClient.ReceiveBufferSize];
 
             netStream.Read(bytes, 0, (int)unClient.ReceiveBufferSize);
@@ -35,9 +38,6 @@ namespace Battleship
             PositionRecu = Encoding.UTF8.GetString(bytes);
 
             RecevoirTouche(PositionRecu);
-
-            if (unForm.InvokeRequired)
-                unForm.Invoke(new MethodInvoker(delegate { unForm.PN_Joueur.Enabled = true; }));
         }
 
         public string GetPosition()
@@ -47,34 +47,74 @@ namespace Battleship
 
         private void RecevoirTouche(string Position)
         {
-            if (Position == "Perdu" || Position == "Gagné")
+            string verifierfin = Position.Substring(0, 5);
+            Position = Position.Replace(verifierfin + "/", "");
+            if (Position != "")
             {
-                AfficherMessageFin(Position);
-                unForm.Close();
+                AnalyseTouche(Position);
             }
-            else
-            {
-                if (Position != "")
+
+            if (unForm.InvokeRequired)
+                unForm.Invoke(new MethodInvoker(delegate
                 {
-                    AnalyseTouche(Position);
-                }
-            }
+                    unForm.LB_Tour.Text = "C'est à vous !";
+
+                    if (VerifierPartiFini())
+                    {
+                        unForm.Close();
+                    }
+
+                    unForm.Refresh();
+                }));
+
         }
 
-        private void AfficherMessageFin(string resultat)
+        private bool VerifierPartiFini()
         {
-            if (resultat == "Perdu")
+            int cpt = 0;
+            if (unForm.LB_A_1.BackColor == Color.FromArgb(255, 128, 128))
             {
-                //MessageBox.Show("DÉSOLÉ, VOUS AVEZ PERDU !!");
+                cpt++;
             }
-            else if (resultat == "Gagné")
+            if (unForm.LB_A_2.BackColor == Color.FromArgb(255, 128, 128))
             {
-                //MessageBox.Show("FÉLICITATION, VOUS AVEZ GAGNÉ !!");
+                cpt++;
             }
+            if (unForm.LB_A_3.BackColor == Color.FromArgb(255, 128, 128))
+            {
+                cpt++;
+            }
+            if (unForm.LB_A_4.BackColor == Color.FromArgb(255, 128, 128))
+            {
+                cpt++;
+            }
+            if (unForm.LB_A_5.BackColor == Color.FromArgb(255, 128, 128))
+            {
+                cpt++;
+            }
+
+            if(cpt == 5)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public void AnalyseTouche(string touche)
         {
+            int index = touche.IndexOf('/');
+            int indexb = touche.IndexOf('\0');
+            string avant = touche.Substring(0, index);
+            string apres = touche.Substring(index + 1, indexb - index - 1);
+            if (index > 0)
+            {
+                if (apres != "aucun")
+                {
+                    AnalyseBateau(apres);
+                }
+            }
+
             touche = touche.Substring(0, 2);
             Button btn = new Button();
             if (unForm.InvokeRequired)
@@ -89,8 +129,6 @@ namespace Battleship
             {
                 CreatePanelOverButton(unForm.PN_Joueur, touche, Battleship.Properties.Resources.WaterExplosion, btn);
             }
-            if (unForm.InvokeRequired)
-                unForm.Invoke(new MethodInvoker(delegate { unForm.Refresh(); }));
         }
 
         private bool VerifierFlotte(string touche)
@@ -101,37 +139,35 @@ namespace Battleship
             int chiffre = int.Parse(touche.Substring(1, 1));
 
             toucher = uneFlotte.VerifierTouche(lettre, chiffre);
-            AnalyseBateau();
 
             return toucher;
         }
 
-        private void AnalyseBateau()
+        private void AnalyseBateau(string unbateau)
         {
             if (unForm.InvokeRequired)
                 unForm.Invoke(new MethodInvoker(delegate
                 {
-                    if (uneFlotte.BattleShip.Detruit)
+                    if (unbateau == "BattleShip")
                     {
                         unForm.LB_A_1.BackColor = Color.FromArgb(255, 128, 128);
                     }
-                    if (uneFlotte.Destroyeur.Detruit)
+                    if (unbateau == "Destroyer")
                     {
                         unForm.LB_A_2.BackColor = Color.FromArgb(255, 128, 128);
                     }
-                    if (uneFlotte.Aircraft.Detruit)
+                    if (unbateau == "AircraftCarrier")
                     {
                         unForm.LB_A_3.BackColor = Color.FromArgb(255, 128, 128);
                     }
-                    if (uneFlotte.Submarine.Detruit)
+                    if (unbateau == "Submarine")
                     {
                         unForm.LB_A_4.BackColor = Color.FromArgb(255, 128, 128);
                     }
-                    if (uneFlotte.Patrol.Detruit)
+                    if (unbateau == "PatrolBoat")
                     {
                         unForm.LB_A_5.BackColor = Color.FromArgb(255, 128, 128);
                     }
-                    unForm.Refresh();
                 }));
         }
 
