@@ -13,3 +13,12 @@ C:\Users\201029426\Desktop\BattleShip_ClientServeur_A15\BattleShip-Serveur\Battl
 C:\Users\Charlie\Desktop\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\bin\Debug\BattleShip-Serveur.exe.config
 C:\Users\Charlie\Desktop\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\obj\Debug\BattleShip-Serveur.exe
 C:\Users\Charlie\Desktop\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\obj\Debug\BattleShip-Serveur.pdb
+C:\Users\Mélissa\Documents\GitHub\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\bin\Debug\BattleShip-Serveur.exe.config
+C:\Users\Mélissa\Documents\GitHub\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\obj\Debug\BattleShip-Serveur.exe
+C:\Users\Mélissa\Documents\GitHub\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\obj\Debug\BattleShip-Serveur.pdb
+C:\Users\Mélissa\Documents\GitHub\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\bin\Debug\BattleShip-Serveur.exe
+C:\Users\Mélissa\Documents\GitHub\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\bin\Debug\BattleShip-Serveur.pdb
+C:\Users\Mélissa\Documents\GitHub\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\obj\Debug\BattleShip-Serveur.csprojResolveAssemblyReference.cache
+C:\Users\Mélissa\Documents\GitHub\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\obj\Debug\BattleShip_Serveur.FormServeur.resources
+C:\Users\Mélissa\Documents\GitHub\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\obj\Debug\BattleShip_Serveur.Properties.Resources.resources
+C:\Users\Mélissa\Documents\GitHub\BattleShip_ClientServeur_A15\BattleShip-Serveur\BattleShip-Serveur\obj\Debug\BattleShip-Serveur.csproj.GenerateResource.Cache

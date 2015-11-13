@@ -714,8 +714,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel PN_Joueur;
-        private System.Windows.Forms.Panel PN_Ennemi;
+        public System.Windows.Forms.Panel PN_Joueur;
+        public System.Windows.Forms.Panel PN_Ennemi;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -755,11 +755,11 @@
         private System.Windows.Forms.Label LB_E_3;
         private System.Windows.Forms.Label LB_E_4;
         private System.Windows.Forms.Label LB_E_5;
-        private System.Windows.Forms.Label LB_A_5;
-        private System.Windows.Forms.Label LB_A_4;
-        private System.Windows.Forms.Label LB_A_3;
-        private System.Windows.Forms.Label LB_A_2;
-        private System.Windows.Forms.Label LB_A_1;
+        public System.Windows.Forms.Label LB_A_5;
+        public System.Windows.Forms.Label LB_A_4;
+        public System.Windows.Forms.Label LB_A_3;
+        public System.Windows.Forms.Label LB_A_2;
+        public System.Windows.Forms.Label LB_A_1;
         private System.Windows.Forms.Label LB_Tour;
 
     }

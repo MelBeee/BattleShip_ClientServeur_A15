@@ -23,11 +23,11 @@ namespace Battleship
 
         public Flotte(Position[] a_BattleShip, Position[] a_Destroyeur, Position[] a_Submarine, Position[] a_Aircraft, Position[] a_Patrol, TypeFlotte leType)
         {
-            BattleShip = new Bateau(TypeBateau.BattleShip, 5, false, 0, a_BattleShip);
-            Destroyeur = new Bateau(TypeBateau.Destroyer, 4, false, 0, a_Destroyeur);
-            Submarine = new Bateau(TypeBateau.Submarine, 3, false, 0, a_Submarine);
-            Aircraft = new Bateau(TypeBateau.AircraftCarrier, 3, false, 0, a_Aircraft);
-            Patrol = new Bateau(TypeBateau.PatrolBoat, 2, false, 0, a_Patrol);
+            BattleShip = new Bateau(TypeBateau.BattleShip, 5, false, 0, a_BattleShip, "BattleShip");
+            Destroyeur = new Bateau(TypeBateau.Destroyer, 4, false, 0, a_Destroyeur, "Destroyeur");
+            Submarine = new Bateau(TypeBateau.Submarine, 3, false, 0, a_Submarine, "Submarine");
+            Aircraft = new Bateau(TypeBateau.AircraftCarrier, 3, false, 0, a_Aircraft, "AircraftCarrier");
+            Patrol = new Bateau(TypeBateau.PatrolBoat, 2, false, 0, a_Patrol, "PatrolBoat");
             unType = leType;
         }
 
@@ -70,7 +70,7 @@ namespace Battleship
             if (VerifierBateau(Aircraft, Lettre, Nombre))
                 touche = true;
             if (VerifierBateau(Submarine, Lettre, Nombre))
-                touche = true; 
+                touche = true;
 
             return touche;
         }
@@ -87,23 +87,27 @@ namespace Battleship
                     touche = true;
                     bateau.Tab[i].touche = true;
                 }
+            }
 
-                if (detruit)
+            for (int i = 0; i < bateau.Tab.Length || detruit; i++)
+            {
+                if(bateau.Tab[i].touche)
                 {
-                    if (bateau.Tab[i].touche)
-                    {
-                        detruit = true;
-                    }
-                    else
-                    {
-                        detruit = false;
-                    }
+                    detruit = true; 
+                }
+                else
+                {
+                    detruit = false;
                 }
             }
 
-            if (!detruit)
+            if(detruit)
             {
-                bateau.Detruit = true;
+                bateau.Detruit = true; 
+            }
+            else
+            {
+                bateau.Detruit = false;
             }
 
             return touche;

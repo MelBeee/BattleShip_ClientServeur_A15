@@ -23,15 +23,16 @@ namespace Battleship
         TcpClient unClient;
         NetworkStream netStream;
         ThreadJeu unThreadJeu;
+        string s_maFlotte;
+        bool commencer; 
 
-        public PlancheJeu(/*Flotte uneFlotte,*/ TcpClient client)
+        public PlancheJeu(string flotte, TcpClient client)
         {
             InitializeComponent();
-
-            InitializeFlotte();
             unClient = client;
             netStream = unClient.GetStream();
-            //maFlotte = new Flotte(uneFlotte);
+            s_maFlotte = flotte;
+            InitializeFlotte();
         }
 
         private void PlancheJeu_Load(object sender, EventArgs e)
@@ -39,6 +40,35 @@ namespace Battleship
             LoadPlan(PN_Ennemi, "_E");
             LoadPlan(PN_Joueur, "_A");
             LoadMesBateaux();
+        }
+
+        private void BoucleJeu()
+        {
+            string fini = "";
+
+            while (fini == "Perdu")
+            {
+                if (commencer)
+                {
+                    // mon tour
+                }
+                else
+                {
+                    // SonTour
+                }
+            }
+        }
+
+        private void JouerMonTour()
+        {
+            // ENABLED TRUE 
+        }
+
+        private void JouerSonTour()
+        {
+            // ENABLED FALSE 
+
+            // J'attend son attaque
         }
 
         private void DeterminerLeTour()
@@ -57,18 +87,156 @@ namespace Battleship
             {
                 LB_Tour.Text = "C'est à vous !";
                 PN_Joueur.Enabled = true;
+                commencer = true; 
             }
             else
             {
                 LB_Tour.Text = "";
                 PN_Joueur.Enabled = false;
+                commencer = false; 
 
-                unThreadJeu = new ThreadJeu(unClient, netStream);
+                unThreadJeu = new ThreadJeu(unClient, netStream, this, maFlotte);
                 Thread unThread = new Thread(new ThreadStart(unThreadJeu.Demarrer));
                 unThread.Start();
-                RecevoirTouche(unThreadJeu.GetPosition());
             }
             this.Refresh();
+        }
+
+        private void BTN_uneAction_Click(object sender, EventArgs e)
+        {
+            Button aClickedButton = (Button)sender;
+
+            aClickedButton.Enabled = false;
+
+            string name = aClickedButton.Name;
+
+            string position = name.Substring(4, 2);
+
+
+            if (VerifierTouche(position))
+            {
+                CreatePanelOverButton(PN_Ennemi, name, Battleship.Properties.Resources.Explosion_Fire, sender);
+            }
+            else
+            {
+                CreatePanelOverButton(PN_Ennemi, name, Battleship.Properties.Resources.WaterExplosion, sender);
+            }
+
+            PN_Joueur.Enabled = false;
+
+            unThreadJeu = new ThreadJeu(unClient, netStream, this, maFlotte);
+            Thread unThread = new Thread(new ThreadStart(unThreadJeu.Demarrer));
+            unThread.Start();
+            this.Refresh();
+        }
+
+        private bool VerifierTouche(string name)
+        {
+            bool touche = false;
+            string reponse = "";
+
+            if (netStream.CanWrite)
+            {
+                Byte[] sendBytes = Encoding.UTF8.GetBytes(name);
+                netStream.Write(sendBytes, 0, sendBytes.Length);
+                PN_Joueur.Enabled = false;
+            }
+
+            if (netStream.CanRead)
+            {
+                byte[] bytes = new byte[unClient.ReceiveBufferSize];
+
+                netStream.Read(bytes, 0, (int)unClient.ReceiveBufferSize);
+
+                reponse = Encoding.UTF8.GetString(bytes);
+            }
+
+            int index = reponse.IndexOf('/');
+            int indexb = reponse.IndexOf('\0');
+            string avant = reponse.Substring(0, index);
+            string apres = reponse.Substring(index + 1, indexb - index - 1);
+            if (index > 0)
+            {
+                if (avant == "true")
+                {
+                    touche = true;
+                }
+
+                if (apres != "aucun")
+                {
+                    AnalyseBateau(apres);
+                }
+            }
+
+            return touche;
+        }
+
+        private void AnalyseBateau(string nom)
+        {
+            switch (nom)
+            {
+                case "BattleShip":
+                    LB_E_1.BackColor = Color.FromArgb(255, 128, 128);
+                    break;
+                case "Destroyer":
+                    LB_E_2.BackColor = Color.FromArgb(255, 128, 128);
+                    break;
+                case "AircraftCarrier":
+                    LB_E_3.BackColor = Color.FromArgb(255, 128, 128);
+                    break;
+                case "Submarine":
+                    LB_E_4.BackColor = Color.FromArgb(255, 128, 128);
+                    break;
+                case "PatrolBoat":
+                    LB_E_5.BackColor = Color.FromArgb(255, 128, 128);
+                    break;
+            }
+            this.Refresh();
+        }
+
+        private bool VerifierBateau(char lettre, int nombre, Bateau unBateau)
+        {
+            for (int i = 0; i < unBateau.Tab.Length; i++)
+            {
+                if (unBateau.Tab[i].letter == lettre && unBateau.Tab[i].number == nombre)
+                {
+                    unBateau.Tab[i].touche = true;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private string RemoveBoatName(string bateau)
+        {
+            int index = bateau.IndexOf(':');
+            return bateau.Substring(index + 1, bateau.Length - index - 1);
+        }
+
+        private void RentrerDansTableau(string bateau, Position[] tableau)
+        {
+            int count = 0;
+            foreach (char c in bateau)
+            {
+                if (c == '-')
+                {
+                    count++;
+                }
+            }
+            int index = 0;
+            char lettre = ' ';
+            int nombre = 0;
+            string tempo = "";
+
+            for (int i = 0; i <= count; i++)
+            {
+                tempo = bateau.Substring(index, 2);
+                lettre = char.Parse(tempo.Substring(0, 1));
+                nombre = int.Parse(tempo.Substring(1, 1));
+                SetLesTrucs(i, lettre, nombre, false, tableau);
+
+                index += 3;
+            }
         }
 
         private void SetLesTrucs(int index, char lettre, int nombre, bool etat, Position[] tab)
@@ -80,35 +248,25 @@ namespace Battleship
 
         private void InitializeFlotte()
         {
-            Position[] tabAircraft = new Position[3]; // 3
-            SetLesTrucs(0, 'A', 0, false, tabAircraft);
-            SetLesTrucs(1, 'A', 1, false, tabAircraft);
-            SetLesTrucs(2, 'A', 2, false, tabAircraft);
+            string battleship = RemoveBoatName(s_maFlotte.Substring(0, 25));
+            string patrolboat = RemoveBoatName(s_maFlotte.Substring(26, 16));
+            string destroyer = RemoveBoatName(s_maFlotte.Substring(43, 21));
+            string submarine = RemoveBoatName(s_maFlotte.Substring(65, 18));
+            string aircraft = RemoveBoatName(s_maFlotte.Substring(84, 24));
 
-            Position[] tabBattleShip = new Position[5]; // 5
-            SetLesTrucs(0, 'B', 0, false, tabBattleShip);
-            SetLesTrucs(1, 'B', 1, false, tabBattleShip);
-            SetLesTrucs(2, 'B', 2, false, tabBattleShip);
-            SetLesTrucs(3, 'B', 3, false, tabBattleShip);
-            SetLesTrucs(4, 'B', 4, false, tabBattleShip);
+            Position[] tabBattleShip = new Position[5];
+            Position[] tabPatrol = new Position[2];
+            Position[] tabDestroyeur = new Position[4];
+            Position[] tabSubmarine = new Position[3];
+            Position[] tabAircraft = new Position[3];
 
-            Position[] tabDestroyeur = new Position[4]; // 4
-            SetLesTrucs(0, 'C', 0, false, tabDestroyeur);
-            SetLesTrucs(1, 'C', 1, false, tabDestroyeur);
-            SetLesTrucs(2, 'C', 2, false, tabDestroyeur);
-            SetLesTrucs(3, 'C', 3, false, tabDestroyeur);
-
-            Position[] tabSubmarine = new Position[3]; // 3
-            SetLesTrucs(0, 'D', 0, false, tabSubmarine);
-            SetLesTrucs(1, 'D', 1, false, tabSubmarine);
-            SetLesTrucs(2, 'D', 2, false, tabSubmarine);
-
-            Position[] tabPatrol = new Position[2]; // 2
-            SetLesTrucs(0, 'E', 0, false, tabPatrol);
-            SetLesTrucs(1, 'E', 1, false, tabPatrol);
+            RentrerDansTableau(battleship, tabBattleShip);
+            RentrerDansTableau(patrolboat, tabPatrol);
+            RentrerDansTableau(destroyer, tabDestroyeur);
+            RentrerDansTableau(submarine, tabSubmarine);
+            RentrerDansTableau(aircraft, tabAircraft);
 
             maFlotte = new Flotte(tabAircraft, tabBattleShip, tabDestroyeur, tabSubmarine, tabPatrol, TypeFlotte.allier);
-
         }
 
         private void LoadMesBateaux()
@@ -184,35 +342,6 @@ namespace Battleship
             }
         }
 
-        private void BTN_uneAction_Click(object sender, EventArgs e)
-        {
-            Button aClickedButton = (Button)sender;
-
-            aClickedButton.Enabled = false;
-
-            string name = aClickedButton.Name;
-
-            string position = name.Substring(4, 2);
-
-
-            if (VerifierTouche(position))
-            {
-                CreatePanelOverButton(PN_Ennemi, name, Battleship.Properties.Resources.Explosion_Fire, sender);
-            }
-            else
-            {
-                CreatePanelOverButton(PN_Ennemi, name, Battleship.Properties.Resources.WaterExplosion, sender);
-            }
-
-            PN_Joueur.Enabled = false;
-            
-            unThreadJeu = new ThreadJeu(unClient, netStream);
-            Thread unThread = new Thread(new ThreadStart(unThreadJeu.Demarrer));
-            unThread.Start();
-            RecevoirTouche(unThreadJeu.GetPosition());
-            this.Refresh();
-        }
-
         private void CreatePanelOverButton(Panel unPanel, string name, Bitmap Image, object sender)
         {
             try
@@ -234,148 +363,6 @@ namespace Battleship
             {
                 MessageBox.Show(ext.ToString());
             }
-        }
-
-        private bool VerifierTouche(string name)
-        {
-            bool touche = false;
-            string reponse = "";
-
-            if (netStream.CanWrite)
-            {
-                Byte[] sendBytes = Encoding.UTF8.GetBytes(name);
-                netStream.Write(sendBytes, 0, sendBytes.Length);
-                PN_Joueur.Enabled = false;
-            }
-
-            if (netStream.CanRead)
-            {
-                byte[] bytes = new byte[unClient.ReceiveBufferSize];
-
-                netStream.Read(bytes, 0, (int)unClient.ReceiveBufferSize);
-
-                reponse = Encoding.UTF8.GetString(bytes);
-            }
-
-
-            int index = reponse.IndexOf('/');
-            int indexb = reponse.IndexOf('\0');
-            string avant = reponse.Substring(0, index);
-            string apres = reponse.Substring(index + 1, indexb - index - 1);
-            if (index > 0)
-            {
-                if (avant == "true")
-                {
-                    touche = true;
-                }
-
-                if (apres != "aucun")
-                {
-                    AnalyseBateau(apres);
-                }
-            }
-
-            return touche;
-        }
-
-        private void AfficherMessageFin(string resultat)
-        {
-            if (resultat == "Perdu")
-            {
-                MessageBox.Show("DÉSOLÉ, VOUS AVEZ PERDU !!");
-            }
-            else if (resultat == "Gagné")
-            {
-                MessageBox.Show("FÉLICITATION, VOUS AVEZ GAGNÉ !!");
-            }
-        }
-
-        private void AnalyseBateau(string nom)
-        {
-            switch (nom)
-            {
-                case "BattleShip":
-                    LB_E_1.BackColor = Color.FromArgb(255, 128, 128);
-                    break;
-                case "PatrolBoat":
-                    LB_E_2.BackColor = Color.FromArgb(255, 128, 128);
-                    break;
-                case "Submarine":
-                    LB_E_3.BackColor = Color.FromArgb(255, 128, 128);
-                    break;
-                case "Destroyer":
-                    LB_E_4.BackColor = Color.FromArgb(255, 128, 128);
-                    break;
-                case "AircraftCarrier":
-                    LB_E_5.BackColor = Color.FromArgb(255, 128, 128);
-                    break;
-            }
-        }
-
-        private void RecevoirTouche(string Position)
-        {
-            string reponse = "";
-
-            if (netStream.CanRead)
-            {
-                byte[] bytes = new byte[unClient.ReceiveBufferSize];
-
-                netStream.Read(bytes, 0, (int)unClient.ReceiveBufferSize);
-
-                reponse = Encoding.UTF8.GetString(bytes);
-            }
-            if (reponse == "Perdu" || reponse == "Gagné")
-            {
-                AfficherMessageFin(reponse);
-                this.Close();
-            }
-            else
-            {
-                if (reponse != "")
-                {
-                    AnalyseTouche(reponse);
-                }
-            }
-        }
-
-        private void AnalyseTouche(string touche)
-        {
-            touche = touche.Substring(0, 2);
-            Button btn = this.Controls.Find("BTN_" + touche + "_A", true).FirstOrDefault() as Button;
-
-            if (VerifierFlotte(touche))
-            {
-                CreatePanelOverButton(PN_Joueur, touche, Battleship.Properties.Resources.Explosion_Fire, btn);
-            }
-            else
-            {
-                CreatePanelOverButton(PN_Joueur, touche, Battleship.Properties.Resources.WaterExplosion, btn);
-            }
-        }
-
-        private bool VerifierFlotte(string touche)
-        {
-            bool toucher = false;
-
-            char lettre = char.Parse(touche.Substring(0, 1));
-            int chiffre = int.Parse(touche.Substring(1, 1));
-
-            toucher = maFlotte.VerifierTouche(lettre, chiffre);
-
-            return toucher;
-        }
-
-        private bool VerifierBateau(char lettre, int nombre, Bateau unBateau)
-        {
-            for (int i = 0; i < unBateau.Tab.Length; i++)
-            {
-                if (unBateau.Tab[i].letter == lettre && unBateau.Tab[i].number == nombre)
-                {
-                    unBateau.Tab[i].touche = true;
-                    return true;
-                }
-            }
-            return false;
         }
 
         private void BTN_Quit_Click(object sender, EventArgs e)

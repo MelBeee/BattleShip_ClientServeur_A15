@@ -25,18 +25,20 @@ namespace Battleship
     public class Bateau
     {
         public TypeBateau leType;
+        public string nom;
         public int NbreCases;
         public int NbreCasesTouche;
         public bool Detruit;
         public Position[] Tab;
 
-        public Bateau(TypeBateau unType, int unNbre, bool unEtat, int unNbreCaseTouche, Position[] Tableau)
+        public Bateau(TypeBateau unType, int unNbre, bool unEtat, int unNbreCaseTouche, Position[] Tableau, string unnom)
         {
             leType = unType;
             NbreCases = unNbre;
             Detruit = unEtat;
             NbreCasesTouche = unNbreCaseTouche;
             Tab = Tableau;
+            nom = unnom;
         }
 
         public void UpdateDetruit()

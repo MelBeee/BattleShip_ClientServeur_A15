@@ -28,7 +28,8 @@ namespace Battleship
         private void SeConnecter()
         {
                 client = new TcpClient();
-                client.Connect("172.17.104.107", 1234);                      
+                //client.Connect("172.17.104.107", 1234);
+                client.Connect("127.0.0.1", 1234);        
         }
 
         private void BTN_Quit_Click(object sender, EventArgs e)
