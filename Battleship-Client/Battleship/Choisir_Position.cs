@@ -29,13 +29,18 @@ namespace Battleship
 
         TcpClient client;
         NetworkStream netStream;
+
         public Choisir_Position(TcpClient unclient)
         {
             InitializeComponent();
             client = unclient;
             netStream = unclient.GetStream();
         }
+<<<<<<< HEAD
         //Attend que le joueur 2 est pret a jouer
+=======
+
+>>>>>>> origin/master
         private void BoucleAttente()
         {
             bool debut = false;
@@ -48,7 +53,7 @@ namespace Battleship
             }
             if (reponse == "Debut")
             {
-                PlancheJeu planche = new PlancheJeu(client);
+                PlancheJeu planche = new PlancheJeu(StringACharlie, client);
                 this.Visible = false;
                 planche.ShowDialog();
                 this.Close();
@@ -90,7 +95,7 @@ namespace Battleship
             }
             else
             {
-                PlancheJeu planche = new PlancheJeu(client);
+                PlancheJeu planche = new PlancheJeu(StringACharlie, client);
                 this.Visible = false;
                 planche.ShowDialog();
                 this.Close();
