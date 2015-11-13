@@ -12,46 +12,60 @@ namespace BattleShip_Serveur
 
     class ThreadRecevoir
     {
+	   //Socket listener du serveur
        TcpListener socketServeur;
+	   //Variable contenant l'adresse ip du serveur
        IPAddress adresseIp;
-                
+        
+       //boolean en charge de la boucle de gestion 
        Boolean ServeurOuvert = false; 
       
+	   //Socket des clients
        TcpClient Joueur1;
        TcpClient Joueur2;
 
+	   //Boolean en charge de s'assurer que les joueurs sont toujours connecté au serveur
        Boolean Joueur1EntrainDeJouer = false;
        Boolean Joueur2EntrainDeJouer = false;
 
-       //Si true Joueur1 sinon Joueur2
+       //Variable qui détermine a qui le tour est rendu(Si true Joueur1 sinon Joueur2)
        Boolean JoueurTour = true;
        
        
        //Variable de transfert d'information
        NetworkStream CommunicationJoueur;
 
-       Byte[] bytes = new Byte[1024];
+	   // Byte utiliser lors de la reception des données
+       Byte[] recevoirJoueur = new Byte[1024];
+	   // Byte utiliser lors de l'envoie des données
        Byte[] envoyezJoueur;
+	   //int qui s'assure si lors de réception il y de l'information d'envoyé
        int infoJoueur; 
-
+       
+	   //form serveur passer en paramêtre afin de modifier certain label lors de la connection
        FormServeur leform;
 
+	   //Strings contenant les positions de tous les bateaux des joueurs
        String Joueur1BateauxPosition = "";
        String Joueur2BateauxPosition = "";
 
+	   //String contentant les attaques recus des joueurs
        String AttaqueBateaux1 = "";
        String AttaqueBateaux2 ="";
 
 
        public ThreadRecevoir(FormServeur FormParent)
        {
+		      //form parent mis dans la variable le form afin d'avoir d'avoir accès a ses objets
               leform = FormParent;
        }
 
+	   //Set qui permet de changer la variable de la boucle de gestion
        public void setBooleanServeur(Boolean serveur)
        {
            ServeurOuvert = serveur;
        }
+	   //Get qui permet d'avoir accès à la variable de gestion
        public Boolean getBooleanServeur()
        {
            return ServeurOuvert;
@@ -60,13 +74,15 @@ namespace BattleShip_Serveur
        { 
             try
             {
+				//Démarage du tcplistener(pour qu'il soit prêt a recevoir les connections des tcpclients)
                 adresseIp = IPAddress.Parse("0");
                 socketServeur = new TcpListener(adresseIp, 1234);
                 socketServeur.Start();
-                //leform.Lb_JoueurConnecter.Text = "En attente de joueur...";              
-               // leform.Btn_DémarrerServeur.Enabled = false;
-                
 
+                //leform.Lb_JoueurConnecter.Text = "En attente de joueur...";              
+                //leform.Btn_DémarrerServeur.Enabled = false;
+                
+				//Boucle d'attente de connection des joueurs
                 for (int nbClient = 0; nbClient < 2; nbClient++)
                  {
                    // leform.Refresh();
@@ -85,11 +101,13 @@ namespace BattleShip_Serveur
                  }
                //  leform.Btn_DémarrerServeur.Enabled = true;                 
 
+				//fonction qui attends la position des bateaux des deux joueurs
                  AttendreLesInfosBateaux();
 
               //   leform.Lb_JoueurConnecter.Text = "Le jeu est commencé";
                //  leform.Refresh();
-
+				  
+				 //boucle de gestion principale du jeu
                  BoucleJeu();          
                 
                    
@@ -119,13 +137,13 @@ namespace BattleShip_Serveur
                    while (JoueurTour)
                    {
                        CommunicationJoueur = Joueur1.GetStream();
-                       infoJoueur = CommunicationJoueur.Read(bytes, 0, bytes.Length);
+                       infoJoueur = CommunicationJoueur.Read(recevoirJoueur, 0, recevoirJoueur.Length);
 
                        if (infoJoueur != 0)
                        {
-                           AttaqueBateaux1 = Encoding.UTF8.GetString(bytes);
+                           AttaqueBateaux1 = Encoding.UTF8.GetString(recevoirJoueur);
                            AttaqueBateaux1 = AttaqueBateaux1.Substring(0, 2);
-                           Array.Clear(bytes, 0, bytes.Length);
+                           Array.Clear(recevoirJoueur, 0, recevoirJoueur.Length);
 
                            //Traitement des attaques                         
                            if (CibleToucher(AttaqueBateaux1))
@@ -163,6 +181,7 @@ namespace BattleShip_Serveur
                            CommunicationJoueur = Joueur2.GetStream();
                            CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
                            JoueurTour = true;
+
                        }
                    }
 
@@ -170,12 +189,12 @@ namespace BattleShip_Serveur
                    while (!JoueurTour)
                    {
                        CommunicationJoueur = Joueur2.GetStream();
-                       infoJoueur = CommunicationJoueur.Read(bytes, 0, bytes.Length);
+                       infoJoueur = CommunicationJoueur.Read(recevoirJoueur, 0, recevoirJoueur.Length);
                        if (infoJoueur != 0)
                        {
-                           AttaqueBateaux2 = Encoding.UTF8.GetString(bytes);
+                           AttaqueBateaux2 = Encoding.UTF8.GetString(recevoirJoueur);
                            AttaqueBateaux2 = AttaqueBateaux2.Substring(0, 2);
-                           Array.Clear(bytes, 0, bytes.Length);
+                           Array.Clear(recevoirJoueur, 0, recevoirJoueur.Length);
                            //Traitement des attaques
                            if (CibleToucher(AttaqueBateaux2))
                            {
@@ -258,32 +277,46 @@ namespace BattleShip_Serveur
        {
            try
            {
+			   //Tant que les deux joueur n'ont pas confirmer les positions de leurs bateaux
                while (!Joueur1EntrainDeJouer && !Joueur2EntrainDeJouer)
                {
+				   //Lie la variable networkstream au stream du joueur 1
                    CommunicationJoueur = Joueur1.GetStream();
+				   //S'il n'est toujours entrain de Jouer
                    if (!Joueur1EntrainDeJouer)
                    {
-                       infoJoueur = CommunicationJoueur.Read(bytes, 0, bytes.Length);
+					   //Recoit les informations qui l'envoie
+                       infoJoueur = CommunicationJoueur.Read(recevoirJoueur, 0, recevoirJoueur.Length);
+					   //Si la fonction Read ne retourne pas 0 alors le joueur a envoyé une valeur
                        if (infoJoueur != 0)
                        {
-                           Joueur1BateauxPosition = System.Text.Encoding.ASCII.GetString(bytes, 0, infoJoueur);
-                           Array.Clear(bytes, 0, bytes.Length);
-                               
+						   //Transforme la variable de retour recevoirJoueur en string et la met comme étant la position des Bateaux du joueur 1
+                           Joueur1BateauxPosition = System.Text.Encoding.ASCII.GetString(recevoirJoueur, 0, infoJoueur);
+                           Array.Clear(recevoirJoueur, 0, recevoirJoueur.Length);                            
+   						   //Set le joueur 1 comme étant entrain de jouer
                            Joueur1EntrainDeJouer = true;
+						   //Envoit a son client d'attendre que le deuxième joueur soit prêt a commencer
                            envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Attendre");
                            CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
                        }
                    }
 
-
+				   //Lie la variable networkstream au stream du joueur 2
                    CommunicationJoueur = Joueur2.GetStream();
+				   //S'il n'est toujours entrain de Jouer
                    if (!Joueur2EntrainDeJouer)
                    {
-                       infoJoueur = CommunicationJoueur.Read(bytes, 0, bytes.Length);
+					   //Recoit les informations qui l'envoie
+                       infoJoueur = CommunicationJoueur.Read(recevoirJoueur, 0, recevoirJoueur.Length);
+					   //Si la fonction Read ne retourne pas 0 alors le joueur a envoyé une valeur
                        if (infoJoueur != 0)
                        {
-                           Joueur2BateauxPosition = System.Text.Encoding.ASCII.GetString(bytes, 0, infoJoueur);
+						   //Transforme la variable de retour recevoirJoueur en string et la met comme étant la position des Bateaux du joueur 2
+                           Joueur2BateauxPosition = System.Text.Encoding.ASCII.GetString(recevoirJoueur, 0, infoJoueur);
+						   Array.Clear(recevoirJoueur, 0, recevoirJoueur.Length);
+						   //Set le joueur 2 comme étant entrain de jouer
                            Joueur2EntrainDeJouer = true;
+						   //Envoit a son client d'attendre que le premier joueur soit prêt a commencer
                            envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Attendre");
                            CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
                        }
@@ -307,16 +340,16 @@ namespace BattleShip_Serveur
 
        private Boolean CibleToucher(String attaque)
        {
-		   Boolean toucher =false;
+		   Boolean toucher = false;
 		   
 		   if( JoueurTour && Joueur1BateauxPosition.Contains(attaque) )
-		   {   			  
-			   Joueur1BateauxPosition = Joueur1BateauxPosition.Trim(attaque.ToCharArray(0, attaque.Length));
+		   { 
+			   Joueur1BateauxPosition.Replace(attaque, "");
 			   toucher = true;
 		   }
 		   else if(!JoueurTour && Joueur2BateauxPosition.Contains(attaque))
 		   {
-               Joueur2BateauxPosition = Joueur2BateauxPosition.Trim(attaque.ToCharArray(0, attaque.Length));
+			   Joueur2BateauxPosition.Replace(attaque, "");
 			   toucher = true;
 		   }		
            return toucher;
