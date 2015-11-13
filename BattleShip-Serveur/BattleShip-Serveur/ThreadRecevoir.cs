@@ -124,6 +124,7 @@ namespace BattleShip_Serveur
        {
            try
            {
+               //Envoit a chaque joueur qui commence
                envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("StartTour");
                CommunicationJoueur = Joueur1.GetStream();
                CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
@@ -132,52 +133,79 @@ namespace BattleShip_Serveur
                CommunicationJoueur = Joueur2.GetStream();
                CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
 
+               //Tant que le serveur est ouvert et que le Joueur 1 et Joueur 2 sont entrain de jouer
                while (ServeurOuvert && Joueur1EntrainDeJouer && Joueur2EntrainDeJouer)
                {
-                   while (JoueurTour)
+                   //Si c'est le tour du joueur 1
+                   if (JoueurTour)
                    {
+                       //Get le stream du Joueur1
                        CommunicationJoueur = Joueur1.GetStream();
+                       //Read le coup qu'il joue
                        infoJoueur = CommunicationJoueur.Read(recevoirJoueur, 0, recevoirJoueur.Length);
-
+                       //Si ce n'est pas égal a 0 alors il a joué sinon il n'est plus connecté
                        if (infoJoueur != 0)
                        {
+                           //Get le coup du joueur en string
                            AttaqueBateaux1 = Encoding.UTF8.GetString(recevoirJoueur);
                            AttaqueBateaux1 = AttaqueBateaux1.Substring(0, 2);
                            Array.Clear(recevoirJoueur, 0, recevoirJoueur.Length);
 
-                           //Traitement des attaques                         
+                           //Check si l'attaque envoyé par le joueur touche un bateau adverse
                            if (CibleToucher(AttaqueBateaux1))
                            {
-                               String touchercouler = CheckSiCouler();
+                               //Check si le bateau est couler
+                               String touchercouler = CheckSiCouler(ref Joueur2BateauxPosition);
                                if (touchercouler != "")
                                {
-                                   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("true/" + touchercouler);
+                                   String SJoueur1 = "ovule/";
+                                   String SJoueur2 = "ovule/";
+                                   CheckFinDePartie(ref SJoueur1, ref SJoueur2);
+
+                                   //Si coulé envoie
+                                   CommunicationJoueur = Joueur1.GetStream();
+                                   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes(SJoueur1 +"true/" + touchercouler);
+                                   CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+
+                                   //Renvoie au joueur 1 (le joueur qui c'est fait attaqué) la possition du coup du joueur 2
+                                   CommunicationJoueur = Joueur2.GetStream();
+                                   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes(SJoueur2 + AttaqueBateaux1 + "/" + touchercouler);
                                    CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
                                }
                                else
                                {
-                                   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("true/aucun");
+                                   //Si pas coulé
+                                   CommunicationJoueur = Joueur1.GetStream();
+                                   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("ovule/true/aucun");
+                                   CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+
+                                   CommunicationJoueur = Joueur2.GetStream();
+                                   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("ovule/" + AttaqueBateaux1 + "/aucun");
                                    CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
                                }
                            }
                            else
                            {
-                               envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("false/aucun");
+                               //S'il ne touche personne
+                               CommunicationJoueur = Joueur1.GetStream();
+                               envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("ovule/false/aucun");
+                               CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+
+                               CommunicationJoueur = Joueur2.GetStream();
+                               envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("ovule/" + AttaqueBateaux1 + "/aucun");
                                CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
                            }
 
-                           CommunicationJoueur = Joueur2.GetStream();
-                           envoyezJoueur = System.Text.Encoding.ASCII.GetBytes(AttaqueBateaux1);
-                           CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
-
+                           
+                           //Finit le tour du joueur 1
                            JoueurTour = false;
-                           CheckFinDePartie();
+                       
                        }
                        else
                        {
                            Joueur1EntrainDeJouer = false;
                            //Joueur 2 win
-                           envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Gagné");
+                           envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Gagne/false/aucun");
                            CommunicationJoueur = Joueur2.GetStream();
                            CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
                            JoueurTour = true;
@@ -185,47 +213,74 @@ namespace BattleShip_Serveur
                        }
                    }
 
-
-                   while (!JoueurTour)
+                   //Si c'est le tour du joueur 2
+                   if (!JoueurTour)
                    {
+                       //Get le stream du Joueur2
                        CommunicationJoueur = Joueur2.GetStream();
+                       //Read le coup qu'il joue
                        infoJoueur = CommunicationJoueur.Read(recevoirJoueur, 0, recevoirJoueur.Length);
                        if (infoJoueur != 0)
                        {
+                           //Get le coup du joueur en string
                            AttaqueBateaux2 = Encoding.UTF8.GetString(recevoirJoueur);
                            AttaqueBateaux2 = AttaqueBateaux2.Substring(0, 2);
                            Array.Clear(recevoirJoueur, 0, recevoirJoueur.Length);
-                           //Traitement des attaques
+
+                           //Check si l'attaque envoyé par le joueur touche un bateau adverse
                            if (CibleToucher(AttaqueBateaux2))
                            {
-                               String touchercouler = CheckSiCouler();
+                               //Check si le bateau est couler
+                               String touchercouler = CheckSiCouler(ref Joueur1BateauxPosition);
                                if (touchercouler != "")
                                {
-                                   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("true/" + touchercouler);
+                                   String SJoueur1 = "ovule/";
+                                   String SJoueur2 = "ovule/";
+                                   CheckFinDePartie(ref SJoueur1, ref SJoueur2);
+
+                                   //Si coulé envoie
+                                   CommunicationJoueur = Joueur2.GetStream();
+                                   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes(SJoueur2+"true/" + touchercouler);
+                                   CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+
+                          
+                                   CommunicationJoueur = Joueur1.GetStream();
+                                   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes(SJoueur1 + AttaqueBateaux2 + "/" + touchercouler);
                                    CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
                                }
                                else
                                {
-                                   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("true/aucun");
+                                   //Si pas coulé
+                                   CommunicationJoueur = Joueur2.GetStream();
+                                   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("ovule/true/aucun");
+                                   CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+
+                              
+                                   CommunicationJoueur = Joueur1.GetStream();
+                                   envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("ovule/" + AttaqueBateaux2 + "/aucun");
                                    CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
                                }
                            }
                            else
-                           {
-                               envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("false/aucun");
+                           { 
+                               //S'il ne touche personne
+                               CommunicationJoueur = Joueur2.GetStream();
+                               envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("ovule/false/aucun");
+                               CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+
+                            
+                               CommunicationJoueur = Joueur1.GetStream();
+                               envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("ovule/" + AttaqueBateaux2 + "/aucun");
                                CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
                            }
-
-                           CommunicationJoueur = Joueur1.GetStream();
-                           envoyezJoueur = System.Text.Encoding.ASCII.GetBytes(AttaqueBateaux2);
-                           CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
+                         
                            JoueurTour = true;
-                           CheckFinDePartie();
+                
                        }
                        else
                        {
                            //Joueur 1 win
-                           envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Gagné");
+                           envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Gagne/false/aucun");
                            CommunicationJoueur = Joueur1.GetStream();
                            CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
 
@@ -241,36 +296,20 @@ namespace BattleShip_Serveur
            }          
        }
 
-	   private void CheckFinDePartie()
+	   private void CheckFinDePartie(ref String Joueur1, ref String Joueur2)
 	   {
+    
            if (Joueur1BateauxPosition == "BattleShip:----/PatrolBoat:-/Destroyer:---/Submarine:--/AircraftCarrier:--/")
-			{			
-                //Joueur 2 win
-                envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Gagné");
-                CommunicationJoueur = Joueur2.GetStream();
-                CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
-
-
-                //Joueur 1 lost
-                envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Perdu");
-                CommunicationJoueur = Joueur1.GetStream();
-                CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
-
+			{
+                Joueur1 = "Gagne/";
+                Joueur2 = "Perdu/";
 			}
            if (Joueur2BateauxPosition == "BattleShip:----/PatrolBoat:-/Destroyer:---/Submarine:--/AircraftCarrier:--/")
             {
-                //Joueur 1 win
-                envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Gagné");
-                CommunicationJoueur = Joueur1.GetStream();
-                CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
-
-
-                //Joueur 2 lost
-                envoyezJoueur = System.Text.Encoding.ASCII.GetBytes("Perdu");
-                CommunicationJoueur = Joueur2.GetStream();
-                CommunicationJoueur.Write(envoyezJoueur, 0, envoyezJoueur.Length);
-
+                Joueur2 = "Gagne/";
+                Joueur1 = "Perdu/";
             }
+   
 	   }
 
        private void AttendreLesInfosBateaux()
@@ -338,38 +377,54 @@ namespace BattleShip_Serveur
        }
 
 
+       //Fonction qui regarde si la cible attaquer est toucher
        private Boolean CibleToucher(String attaque)
        {
 		   Boolean toucher = false;
 		   
-		   if( JoueurTour && Joueur1BateauxPosition.Contains(attaque) )
+		   if(JoueurTour && Joueur2BateauxPosition.Contains(attaque) )
 		   { 
-			   Joueur1BateauxPosition.Replace(attaque, "");
-			   toucher = true;
+			  Joueur2BateauxPosition =  Joueur2BateauxPosition.Replace(attaque, "");
+			  toucher = true;
 		   }
-		   else if(!JoueurTour && Joueur2BateauxPosition.Contains(attaque))
+		   else if(!JoueurTour && Joueur1BateauxPosition.Contains(attaque))
 		   {
-			   Joueur2BateauxPosition.Replace(attaque, "");
-			   toucher = true;
+			 Joueur1BateauxPosition  =  Joueur1BateauxPosition.Replace(attaque, "");
+			 toucher = true;
 		   }		
            return toucher;
        }
 
 
-	   private String CheckSiCouler()
+	   private String CheckSiCouler(ref String JoueurBateaux)
 	   {
 		   String ToucherCouler = "";
 
-		   if (Joueur1BateauxPosition.Contains("Battleship:----/") || Joueur2BateauxPosition.Contains("Battleship:----/"))
-			   ToucherCouler = "Battleship";
-		   else if (Joueur1BateauxPosition.Contains("PatrolBoat:-/") || Joueur2BateauxPosition.Contains("PatrolBoat:-/"))
-			   ToucherCouler = "PatrolBoat";
-		   else if (Joueur1BateauxPosition.Contains("Destroyer:---/") || Joueur2BateauxPosition.Contains("Destroyer:---/"))
-			   ToucherCouler = "Destroyer";
-		   else if (Joueur1BateauxPosition.Contains("Submarine:--/") || Joueur2BateauxPosition.Contains("Submarine:--/"))
-			   ToucherCouler = "Submarine";
-		   else if (Joueur1BateauxPosition.Contains("AircraftCarrier:--/") || Joueur2BateauxPosition.Contains("AircraftCarrier:--/"))
-			   ToucherCouler = "AircraftCarrier"; 
+		   if (JoueurBateaux.Contains("BattleShip:----/"))
+           {
+               ToucherCouler = "BattleShip";
+               JoueurBateaux = JoueurBateaux.Replace("BattleShip:----/","");
+           }
+           else if (JoueurBateaux.Contains("PatrolBoat:-/"))
+           {
+                ToucherCouler = "PatrolBoat";
+                JoueurBateaux = JoueurBateaux.Replace("PatrolBoat:-/", "");
+           }			   
+           else if (JoueurBateaux.Contains("Destroyer:---/"))
+           {
+                ToucherCouler = "Destroyer";
+                JoueurBateaux = JoueurBateaux.Replace("Destroyer:---/", "");
+           }			   
+           else if (JoueurBateaux.Contains("Submarine:--/"))
+           {
+                ToucherCouler = "Submarine";
+                JoueurBateaux = JoueurBateaux.Replace("Submarine:--/", "");
+           }			  
+           else if (JoueurBateaux.Contains("AircraftCarrier:--/"))
+           {
+               ToucherCouler = "AircraftCarrier";
+               JoueurBateaux = JoueurBateaux.Replace("AircraftCarrier:--/", "");
+           }			  
 		   
 		   return ToucherCouler;
 	   }
