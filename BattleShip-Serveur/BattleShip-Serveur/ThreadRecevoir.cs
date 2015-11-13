@@ -79,33 +79,33 @@ namespace BattleShip_Serveur
                 socketServeur = new TcpListener(adresseIp, 1234);
                 socketServeur.Start();
 
-                //leform.Lb_JoueurConnecter.Text = "En attente de joueur...";              
-                //leform.Btn_DémarrerServeur.Enabled = false;
+                leform.Lb_JoueurConnecter.Text = "En attente de joueur...";              
+                leform.Btn_DémarrerServeur.Enabled = false;
                 
 				//Boucle d'attente de connection des joueurs
                 for (int nbClient = 0; nbClient < 2; nbClient++)
                  {
-                   // leform.Refresh();
+                     leform.Refresh();
                      if (nbClient == 0)
                      {
                          Joueur1 = socketServeur.AcceptTcpClient();
-                       // leform.Lb_JoueurConnecter.Text = "Joueur trouvé en attente d'un autre joueur...";
-                        //leform.Refresh();
+                         leform.Lb_JoueurConnecter.Text = "Joueur trouvé en attente d'un autre joueur...";
+                         leform.Refresh();
                      }
                      else if (nbClient == 1)
                      {
                          Joueur2 = socketServeur.AcceptTcpClient();
-                        //leform.Lb_JoueurConnecter.Text = "Deuxième Joueur trouvé démarage de la partie...";
-                        // leform.Refresh();
+                         leform.Lb_JoueurConnecter.Text = "Deuxième Joueur trouvé démarage de la partie...";
+                         leform.Refresh();
                      }                  
                  }
-               //  leform.Btn_DémarrerServeur.Enabled = true;                 
+                 leform.Btn_DémarrerServeur.Enabled = true;                 
 
 				//fonction qui attends la position des bateaux des deux joueurs
                  AttendreLesInfosBateaux();
 
-              //   leform.Lb_JoueurConnecter.Text = "Le jeu est commencé";
-               //  leform.Refresh();
+                 leform.Lb_JoueurConnecter.Text = "Le jeu est commencé";
+                 leform.Refresh();
 				  
 				 //boucle de gestion principale du jeu
                  BoucleJeu();          
@@ -116,8 +116,8 @@ namespace BattleShip_Serveur
             {
 
             }    
-           //leform.Lb_JoueurConnecter.Text = "Le jeu est finit";
-           //leform.Refresh();
+           leform.Lb_JoueurConnecter.Text = "Le jeu est finit";
+           leform.Refresh();
        }
 
        private void BoucleJeu()
@@ -299,12 +299,12 @@ namespace BattleShip_Serveur
 	   private void CheckFinDePartie(ref String Joueur1, ref String Joueur2)
 	   {
     
-           if (Joueur1BateauxPosition == "BattleShip:----/PatrolBoat:-/Destroyer:---/Submarine:--/AircraftCarrier:--/")
+           if (Joueur1BateauxPosition == "BattleShip:-----/PatrolBoat:--/Destroyer:----/Submarine:---/AircraftCarrier:---/")
 			{
                 Joueur1 = "Gagne/";
                 Joueur2 = "Perdu/";
 			}
-           if (Joueur2BateauxPosition == "BattleShip:----/PatrolBoat:-/Destroyer:---/Submarine:--/AircraftCarrier:--/")
+           if (Joueur2BateauxPosition == "BattleShip:-----/PatrolBoat:--/Destroyer:----/Submarine:---/AircraftCarrier:--/")
             {
                 Joueur2 = "Gagne/";
                 Joueur1 = "Perdu/";
@@ -400,30 +400,30 @@ namespace BattleShip_Serveur
 	   {
 		   String ToucherCouler = "";
 
-		   if (JoueurBateaux.Contains("BattleShip:----/"))
+		   if (JoueurBateaux.Contains("BattleShip:-----/"))
            {
                ToucherCouler = "BattleShip";
-               JoueurBateaux = JoueurBateaux.Replace("BattleShip:----/","");
+               JoueurBateaux = JoueurBateaux.Replace("BattleShip:-----/","");
            }
-           else if (JoueurBateaux.Contains("PatrolBoat:-/"))
+           else if (JoueurBateaux.Contains("PatrolBoat:--/"))
            {
                 ToucherCouler = "PatrolBoat";
-                JoueurBateaux = JoueurBateaux.Replace("PatrolBoat:-/", "");
+                JoueurBateaux = JoueurBateaux.Replace("PatrolBoat:--/", "");
            }			   
-           else if (JoueurBateaux.Contains("Destroyer:---/"))
+           else if (JoueurBateaux.Contains("Destroyer:----/"))
            {
                 ToucherCouler = "Destroyer";
-                JoueurBateaux = JoueurBateaux.Replace("Destroyer:---/", "");
+                JoueurBateaux = JoueurBateaux.Replace("Destroyer:----/", "");
            }			   
-           else if (JoueurBateaux.Contains("Submarine:--/"))
+           else if (JoueurBateaux.Contains("Submarine:---/"))
            {
                 ToucherCouler = "Submarine";
-                JoueurBateaux = JoueurBateaux.Replace("Submarine:--/", "");
+                JoueurBateaux = JoueurBateaux.Replace("Submarine:---/", "");
            }			  
-           else if (JoueurBateaux.Contains("AircraftCarrier:--/"))
+           else if (JoueurBateaux.Contains("AircraftCarrier:---/"))
            {
                ToucherCouler = "AircraftCarrier";
-               JoueurBateaux = JoueurBateaux.Replace("AircraftCarrier:--/", "");
+               JoueurBateaux = JoueurBateaux.Replace("AircraftCarrier:---/", "");
            }			  
 		   
 		   return ToucherCouler;
