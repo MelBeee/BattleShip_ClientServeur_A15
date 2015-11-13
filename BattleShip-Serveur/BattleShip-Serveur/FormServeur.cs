@@ -28,7 +28,7 @@ namespace BattleShip_Serveur
         private void Btn_DémarrerServeur_Click(object sender, EventArgs e)
         {
 			//Si le serveur est ouvert
-            if(ServeurOuvert)
+            if(!ServeurOuvert)
             {  
 				Btn_DémarrerServeur.Text = "Fermer";
                 LB_StatusServer.Text = "SERVEUR OUVERT";
